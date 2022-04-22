@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DocuStorage.Common\DocuStorage.Common.csproj" />
+      <ProjectReference Include="..\DocuStorate.Data\DocuStorate.Data.csproj" />
+    </ItemGroup>
+</Project>

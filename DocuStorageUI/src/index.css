@@ -1,0 +1,82 @@
+a { cursor: pointer; }
+
+.app-container {
+    min-height: 350px;
+}
+
+.nav-right {
+    color: #fff;
+    padding: 0.5rem 1rem;
+}
+
+.nav-option {
+    color: black;
+    padding: 0.5rem 1rem;
+}
+
+
+.nav-leftside {
+    height: 100%; /* 100% Full-height */
+    /*width: 0; */
+    margin-top:70px;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #343a40 !important; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s;
+}
+
+
+.nav-leftitem {
+    padding: 10px 20px;
+}
+
+.nav-leftside a:hover {
+    color: #ffffff;
+}
+
+.nav-link a:hover {
+    color: #ffffff;
+}
+
+.nav-leftside a {
+    padding: 0px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #9d9d9d;
+    display: block;
+    transition: 0.3s;
+}
+
+.containerBody {
+    margin-left:200px;
+    position: fixed;
+}
+
+.float-right {
+    float: right;
+}
+
+.checkboxLabel {
+    margin-left: 5px;
+}
+
+.documentable {
+    width: 100%;
+}
+
+.documentable th{
+    width: 100px;
+}
+
+.documentable td {
+    width: 100px;
+}
+
+.required {
+    color: red;
+    padding-left:10px
+}
