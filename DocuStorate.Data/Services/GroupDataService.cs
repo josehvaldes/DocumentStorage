@@ -13,19 +13,19 @@ namespace DocuStorate.Data.Services
     {
         public void AssignToUser(int userId, int[] groups)
         {
-            var query = "select * from AssignGroupsToUser(@userid, @groups)";
+            var query = "select * from assign_groups_to_user(@userId, @groups)";
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
 
             using var cmd = new NpgsqlCommand(query, con);
-            cmd.Parameters.AddWithValue("userid", userId);
+            cmd.Parameters.AddWithValue("userId", userId);
             cmd.Parameters.Add("groups", NpgsqlTypes.NpgsqlDbType.Array | NpgsqlTypes.NpgsqlDbType.Integer).Value = groups;
             var val = cmd.ExecuteNonQuery();
         }
 
         public Group Create(Group group)
         {
-            var query = "insert into Groups(name) values (@name) RETURNING id";
+            var query = "insert into groups(name) values (@name) RETURNING id";
 
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
@@ -42,7 +42,7 @@ namespace DocuStorate.Data.Services
         public List<Group> GetAll()
         {
             List<Group> result = new List<Group>();
-            var query = "select * from GetGroups()";
+            var query = "select * from get_groups()";
 
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
@@ -66,12 +66,12 @@ namespace DocuStorate.Data.Services
         public List<Group> GetByUser(int userId)
         {
             List<Group> result = new List<Group>();
-            var query = "select * from GetGroupsbyUser(@userid)";
+            var query = "select * from get_groups_by_user(@userId)";
 
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
             using var cmd = new NpgsqlCommand(query, con);
-            cmd.Parameters.AddWithValue("userid", userId);
+            cmd.Parameters.AddWithValue("userId", userId);
             using var reader = cmd.ExecuteReader();
 
             while (reader.Read())

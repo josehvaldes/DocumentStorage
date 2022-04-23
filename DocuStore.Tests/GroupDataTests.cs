@@ -36,7 +36,7 @@ public class GroupDataTests
         var response = _groupDataService.Create(GetDummyGroup());
         Assert.IsNotNull(response);
         Assert.Greater(response.Id, 0);
-        
+        _groupDataService.Delete(response.Id);
     }
         
     [Test]
@@ -55,7 +55,9 @@ public class GroupDataTests
 
         var list = _groupDataService.GetByUser(DefaultUserId);
         Assert.IsNotEmpty(list);
+        _groupDataService.Delete(group.Id);
     }
+    
 
     [Test]
     public void AssignToUser_NoExceptions()

@@ -17,7 +17,7 @@ namespace DocuStorate.Data.Services
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
 
-            var query = "insert into Users(username, password, role) values (@username, @passwd, @role) RETURNING id";
+            var query = "insert into users(username, password, role) values (@username, @passwd, @role) RETURNING id";
 
             using var cmd = new NpgsqlCommand(query, con);
             cmd.Parameters.AddWithValue("username", user.Username);
@@ -45,7 +45,7 @@ namespace DocuStorate.Data.Services
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
 
-            var query = "select * from GetUser(@user_id)";
+            var query = "select * from get_user(@user_id)";
 
             using var cmd = new NpgsqlCommand(query, con);
             cmd.Parameters.AddWithValue("user_id", id);
@@ -71,7 +71,7 @@ namespace DocuStorate.Data.Services
             using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
             con.Open();
 
-            var query = "select * from GetUser(@username, @passwd)";
+            var query = "select * from get_user(@username, @passwd)";
 
             using var cmd = new NpgsqlCommand(query, con);
             cmd.Parameters.AddWithValue("username", userparams.Username);
@@ -103,7 +103,7 @@ namespace DocuStorate.Data.Services
             {
                 con.Open();
 
-                var query = "select * from GetAllUsers()";
+                var query = "select * from get_all_users()";
 
                 using var cmd = new NpgsqlCommand(query, con);
 

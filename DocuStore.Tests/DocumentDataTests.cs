@@ -114,7 +114,7 @@ public class DocumentDataTests
 
 
     [Test]
-    public void GetInGroupByUser_NotEmpty()
+    public void Get_InGroupByUser_NotEmpty()
     {
         int[] documents = new int[] { _dummy.Id };
         int[] groups = new int[] { DefaultGroupId };
@@ -127,7 +127,7 @@ public class DocumentDataTests
     }
 
     [Test]
-    public void GetAllAvailable_NotEmpty()
+    public void All_Get_Available_NotEmpty()
     {
         int[] documents = new int[] { _dummy.Id };
         _documentService.AssignToGroup(DefaultGroupId, documents);
