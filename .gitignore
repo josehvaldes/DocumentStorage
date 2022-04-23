@@ -1,0 +1,7 @@
+*.dll
+*.pdb
+*/bin/*
+*/obj/*
+.vs/*
+DocuStorageUI/package-lock.json
+DocuStorage/DocuStorage.csproj.user

@@ -57,6 +57,7 @@ public class DocumentDataTests
         var response = _documentService.Create(document);
         Assert.IsNotNull(response);
         Assert.Greater(response.Id, 0);
+        _documentService.Delete(document.Id);
     }
 
     [Test]
