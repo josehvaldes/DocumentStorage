@@ -17,5 +17,12 @@ namespace DocuStorage.Common
             return cs;
         }
 
+        public static string DatabaseContentConnection()
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var cs = configuration["ConnectionStrings:contentdb"];
+
+            return cs;
+        }
     }
 }

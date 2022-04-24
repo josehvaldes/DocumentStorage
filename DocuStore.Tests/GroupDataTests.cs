@@ -1,6 +1,8 @@
 ﻿namespace DocuStore.Tests;
-using DocuStorate.Data.Model;
+
 using DocuStorate.Data.Services;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 using NUnit.Framework;
 
 /// <summary>

@@ -1,6 +1,7 @@
 ﻿namespace DocuStore.Tests;
-using DocuStorate.Data.Model;
 using DocuStorate.Data.Services;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 using NUnit.Framework;
 
 
@@ -23,7 +24,7 @@ public class DocumentDataTests
     [SetUp]
     public void Setup()
     {
-        _documentService = new DocumentDataService();
+        _documentService = new DocumentDataService(new DocumentContentService());
         _groupDataService = new GroupDataService();
 
         _dummy = _documentService.Create(GetDocument());
@@ -131,6 +132,7 @@ public class DocumentDataTests
     {
         int[] documents = new int[] { _dummy.Id };
         _documentService.AssignToGroup(DefaultGroupId, documents);
+        Thread.Sleep(1000);
 
         var list = _documentService.GetAllAvailableUser(DefaultUserId);
         Assert.IsNotEmpty(list);

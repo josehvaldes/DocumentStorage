@@ -1,8 +1,9 @@
 ﻿namespace DocuStorage.Services;
 
 using DocuStorage.Models;
-using DocuStorate.Data.Model;
-using DocuStorate.Data.Services;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
+
 
 public class DocumentService : IDocumentService
 {

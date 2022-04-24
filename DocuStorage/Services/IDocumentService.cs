@@ -1,5 +1,7 @@
 ﻿using DocuStorage.Models;
-using DocuStorate.Data.Model;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
+
 
 namespace DocuStorage.Services
 {

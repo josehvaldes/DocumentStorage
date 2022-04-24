@@ -1,8 +1,8 @@
 namespace DocuStorage.Helpers;
 
+using DocuStorate.Common.Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using DocuStorate.Data.Model;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute, IAuthorizationFilter

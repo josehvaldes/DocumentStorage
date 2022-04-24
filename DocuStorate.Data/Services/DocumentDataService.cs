@@ -1,7 +1,8 @@
 ﻿namespace DocuStorate.Data.Services;
 
 using DocuStorage.Common;
-using DocuStorate.Data.Model;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 using Npgsql;
 
 /// <summary>
@@ -9,6 +10,12 @@ using Npgsql;
 /// </summary>
 public class DocumentDataService : IDocumentDataService
 {
+    private IDocumentContentService _documentContentService;
+    public DocumentDataService(IDocumentContentService documentContentService) 
+    {
+        _documentContentService = documentContentService;
+    }
+
     public void AssignToGroup(int groupId, int[] documents)
     {
         var query = "select * from assign_documents_to_group(@groupid, @docs)";
@@ -51,7 +58,16 @@ public class DocumentDataService : IDocumentDataService
 
         var val = cmd.ExecuteScalar();
         document.Id = Int32.Parse(val?.ToString() ?? "0");
-            
+
+        if (document.Id > 0)
+        {
+            _documentContentService.SaveDocContent(document);
+        }
+        else 
+        {
+            throw new Exception("Unexpected document Id");
+        }
+
         return document;
     }
 
@@ -77,11 +93,14 @@ public class DocumentDataService : IDocumentDataService
                 CreateOn = reader.GetDateTime(4),
             };
 
-            document.Content = (byte[])reader[5];
+            _documentContentService.GetDocContent(document);
         }
 
         return document;
     }
+
+
+
 
     public List<Document> GetAll()
     {
@@ -227,6 +246,8 @@ public class DocumentDataService : IDocumentDataService
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("id", id);
         var val = cmd.ExecuteNonQuery();
+
+        _documentContentService.DeleteContent(id);
     }
 }
 

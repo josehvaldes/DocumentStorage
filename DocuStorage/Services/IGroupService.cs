@@ -1,15 +1,18 @@
-﻿using DocuStorage.Models;
-using DocuStorate.Data.Model;
+﻿namespace DocuStorage.Services;
 
-namespace DocuStorage.Services
+using DocuStorage.Models;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
+
+
+
+public interface IGroupService
 {
-    public interface IGroupService
-    {
-        Group Create(GroupRequest request);
+    Group Create(GroupRequest request);
 
-        List<Group> GetAll();
+    List<Group> GetAll();
 
-        List<Group> GetByUser(int userId);
-        void AssignToUser(int userid, int[] groups);
-    }
+    List<Group> GetByUser(int userId);
+    void AssignToUser(int userid, int[] groups);
 }
+

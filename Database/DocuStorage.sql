@@ -16,7 +16,6 @@ CREATE TABLE documents(
 	category varchar(50) not null,
 	description varchar(50),
 	created_on TIMESTAMP NOT NULL,
-	content bytea,
 	PRIMARY KEY (id)
 );
 
@@ -75,8 +74,8 @@ CREATE TABLE user_documents (
 );
 
 CREATE INDEX user_doc_idx ON user_documents(user_id);
-CREATE INDEX user_doc_didx ON user_documents(document_id);		
 
+CREATE INDEX user_doc_didx ON user_documents(document_id);		
 
 
 CREATE OR REPLACE FUNCTION get_all_users()
@@ -105,7 +104,7 @@ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION get_document(uid int)
 RETURNS SETOF documents
 AS $$
-SELECT id, name, category, description, created_on, content from documents where id = uid;
+SELECT id, name, category, description, created_on from documents where id = uid;
 $$
 LANGUAGE SQL;
 

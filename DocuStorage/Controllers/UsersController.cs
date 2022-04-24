@@ -2,9 +2,10 @@
 
 using Microsoft.AspNetCore.Mvc;
 using DocuStorage.Services;
-using DocuStorate.Data.Model;
 using DocuStorage.Models;
 using DocuStorage.Helpers;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 
 [ApiController]
 [Route("[controller]")]
@@ -20,6 +21,11 @@ public class UsersController : ControllerBase
     [HttpPost("authenticate")]
     public IActionResult Authenticate(AuthenticateRequest model)
     {
+        if (!ModelState.IsValid)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, ModelState);
+        }
+
         var response = _userService.Authenticate(model);
 
         if (response == null)
@@ -59,6 +65,11 @@ public class UsersController : ControllerBase
     [HttpPost("Update")]
     public IActionResult Update(UserRequest model)
     {
+        if (!ModelState.IsValid)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, ModelState);
+        }
+
         var user = _userService.Update(new User()
         {
             Id = model.Id,

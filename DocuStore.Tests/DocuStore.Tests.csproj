@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocuStorage.Common.Data\DocuStorage.Common.Data.csproj" />
     <ProjectReference Include="..\DocuStorage.Common\DocuStorage.Common.csproj" />
     <ProjectReference Include="..\DocuStorate.Data\DocuStorate.Data.csproj" />
   </ItemGroup>

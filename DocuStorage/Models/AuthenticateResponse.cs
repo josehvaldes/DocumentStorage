@@ -1,6 +1,7 @@
-using DocuStorate.Data.Model;
-
 namespace DocuStorage.Models;
+
+using DocuStorate.Common.Data.Model;
+
 
 public class AuthenticateResponse
 {

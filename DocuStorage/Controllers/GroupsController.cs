@@ -45,6 +45,11 @@ public class GroupsController : ControllerBase
     [HttpPost("create")]
     public IActionResult Create(GroupRequest request)
     {
+        if (!ModelState.IsValid)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, ModelState);
+        }
+
         try
         {
             var group = _groupService.Create(request);

@@ -1,7 +1,8 @@
 ﻿namespace DocuStore.Tests;
-using DocuStorate.Data.Services;
-using DocuStorate.Data.Model;
 using NUnit.Framework;
+using DocuStorate.Data.Services;
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 
 /// <summary>
 /// Unit for UserDataService class
@@ -11,7 +12,7 @@ public class UserDataTests
 {
     //private const int DefaultUserId = 1;
 
-    private UserDataService _userService;
+    private IUserDataService _userService;
     private User _dummyUser;
     [SetUp]
     public void Setup() 

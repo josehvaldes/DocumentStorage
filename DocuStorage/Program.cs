@@ -3,6 +3,7 @@ using DocuStorage.Services;
 using DocuStorate.Data.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
+using DocuStorate.Common.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ var builder = WebApplication.CreateBuilder(args);
 
     services.AddScoped<IGroupService, GroupService>();
     services.AddScoped<IGroupDataService, GroupDataService>();
+
+    services.AddScoped<IDocumentContentService, DocumentContentService>();
 
 }
 

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Common", "DocuS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStore.Tests", "DocuStore.Tests\DocuStore.Tests.csproj", "{405F2E8B-13AE-4C31-85DA-7721BF4DD9D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuStorage.Common.Data", "DocuStorage.Common.Data\DocuStorage.Common.Data.csproj", "{126C668B-0780-461C-9FA8-A77F6DD3AF16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{405F2E8B-13AE-4C31-85DA-7721BF4DD9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{405F2E8B-13AE-4C31-85DA-7721BF4DD9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{405F2E8B-13AE-4C31-85DA-7721BF4DD9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126C668B-0780-461C-9FA8-A77F6DD3AF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126C668B-0780-461C-9FA8-A77F6DD3AF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126C668B-0780-461C-9FA8-A77F6DD3AF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126C668B-0780-461C-9FA8-A77F6DD3AF16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

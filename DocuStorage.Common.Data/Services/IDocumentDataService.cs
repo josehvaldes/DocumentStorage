@@ -1,6 +1,6 @@
-﻿namespace DocuStorate.Data.Services;
+﻿namespace DocuStorate.Common.Data.Services;
 
-using DocuStorate.Data.Model;
+using DocuStorate.Common.Data.Model;
 
 public interface IDocumentDataService
 {

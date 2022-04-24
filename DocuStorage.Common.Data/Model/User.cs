@@ -1,6 +1,6 @@
-﻿namespace DocuStorate.Data.Model;
-using System.Text.Json.Serialization;
+﻿namespace DocuStorate.Common.Data.Model;
 
+using System.Text.Json.Serialization;
 public class User
 {
     public int Id { get; set; }

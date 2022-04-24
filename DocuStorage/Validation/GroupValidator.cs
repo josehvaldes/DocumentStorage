@@ -9,6 +9,6 @@ public class GroupValidator: AbstractValidator<GroupRequest>
 {
     public GroupValidator() 
     {
-        RuleFor(group => group.Name).NotEmpty();
+        RuleFor(group => group.Name).NotEmpty().Length(1, 50);
     }
 }

@@ -5,11 +5,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DocuStorate.Data.Model;
 using DocuStorate.Data.Services;
 using DocuStorage.Models;
 using DocuStorage.Helpers;
-
+using DocuStorate.Common.Data.Model;
+using DocuStorate.Common.Data.Services;
 
 
 public class UserService : IUserService
