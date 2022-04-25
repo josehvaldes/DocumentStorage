@@ -9,40 +9,25 @@ using Moq;
 [TestFixture]
 public class GroupDataMkTest
 {
-    private IGroupDataService _groupDataService;
-    private int _defaultGroupId = 3;
-    private int DefaultUserId = 1;
-    [SetUp]
-    public void Setup()
-    {
-        _groupDataService = new GroupDataDpService();
-        
-    }
-
-    private Group GetDummyGroup()
-    {
-        Group group = new Group()
-        {
-            Name = "Dapper Group",
-        };
-        return group;
-    }
 
     [Test]
     public void Create_Group_NotEmpty()
     {
-        try
-        {
-            var response = _groupDataService.Create(GetDummyGroup());
-            Assert.IsNotNull(response);
-            Assert.Greater(response.Id, 0);
-            _groupDataService.Delete(response.Id);
+        try {
+            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            var dpWrapper = new Mock<ISqlDapperWrapper>();
+
+            dpWrapper.Setup(x => x.ExecuteScalar<int>(It.IsAny<string>(), It.IsAny<object?>())).Returns(1);
+            sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
+
+            var groupDataService = new GroupDataDpService(sqlprovider.Object);
+            var response = groupDataService.Create(new Group(){Name = "Dapper Group"});
+            Assert.AreEqual(response.Id, 1);
         }
         catch (Exception) 
         {
             Assert.Fail();
         }
-        
     }
 
     [Test]
@@ -50,7 +35,15 @@ public class GroupDataMkTest
     {
         try 
         {
-            _groupDataService.Delete(_defaultGroupId);
+            var dpWrapper = new Mock<ISqlDapperWrapper>();
+            dpWrapper.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<object?>())).Returns(1);
+
+            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
+
+            var groupDataService = new GroupDataDpService(sqlprovider.Object);
+
+            groupDataService.Delete(1);
         }
         catch(Exception)
         {
@@ -61,14 +54,34 @@ public class GroupDataMkTest
     [Test]
     public void Get_Groups_IsNotEmpty()
     {
-        var list = _groupDataService.GetAll();
+        var dpWrapper = new Mock<ISqlDapperWrapper>();
+        
+        dpWrapper.Setup(x => x.Query<Group>(It.IsAny<string>(), It.IsAny<object>())).
+            Returns(new List<Group>() { new Group() { Name="Moq Test", Id=1 } });
+
+        var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+        sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
+
+        var groupDataService = new GroupDataDpService(sqlprovider.Object);
+
+        var list = groupDataService.GetAll();
         Assert.IsNotEmpty(list);
     }
 
     [Test]
     public void GetGroupByUser_IsNotEmpty()
     {
-        var list = _groupDataService.GetByUser(1);
+        var dpWrapper = new Mock<ISqlDapperWrapper>();
+        dpWrapper.Setup(x => x.Query<Group>(It.IsAny<string>(), It.IsAny<object>())).
+            Returns(new List<Group>() { new Group() { Name = "Moq Test", Id = 1 } });
+
+
+        var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+        sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
+
+        var groupDataService = new GroupDataDpService(sqlprovider.Object);
+
+        var list = groupDataService.GetByUser(1);
         Assert.IsNotEmpty(list);
     }
 
@@ -77,11 +90,17 @@ public class GroupDataMkTest
     {
         try
         {
-            var group = _groupDataService.Create(GetDummyGroup());
-            int[] groups = new int[] { group.Id };
-            _groupDataService.AssignToUser(DefaultUserId, groups);
+            var dpWrapper = new Mock<ISqlDapperWrapper>();
+            dpWrapper.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<object>())).Returns(1);
 
-            _groupDataService.Delete(group.Id);
+            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
+
+            var groupDataService = new GroupDataDpService(sqlprovider.Object);
+
+            int[] groups = new int[] { 1 };
+            groupDataService.AssignToUser(1, groups);
+
         }
         catch (Exception)
         {
