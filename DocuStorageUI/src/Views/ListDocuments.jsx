@@ -80,7 +80,7 @@ function ListDocuments()
                                     <td>{doc.name}</td>
                                     <td>{doc.category}</td>
                                     <td>{doc.description}</td>
-                                    <td>{doc.Source}</td>
+                                    <td>{doc.source}</td>
                                     <td><a href="#" id={doc.id} name={doc.name} onClick={download}> Download</a></td>
                                 </tr>
                             )}

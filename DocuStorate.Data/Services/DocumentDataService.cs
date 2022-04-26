@@ -202,7 +202,7 @@ public class DocumentDataService : IDocumentDataService
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
                 CreateOn = reader.GetDateTime(4),
                 Source = reader.IsDBNull(5) ? "" : reader.GetString(5),
-                SourceType = "GROUP"
+                Source_Type = "GROUP"
             };
             list.Add(document);
         }
@@ -228,7 +228,7 @@ public class DocumentDataService : IDocumentDataService
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
                 CreateOn = reader.GetDateTime(4),
                 Source = reader.IsDBNull(5) ? "" : reader.GetString(5),
-                SourceType = reader.IsDBNull(6) ? "" : reader.GetString(6)
+                Source_Type = reader.IsDBNull(6) ? "" : reader.GetString(6)
 
             };
             list.Add(document);

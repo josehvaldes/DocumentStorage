@@ -182,7 +182,7 @@ RETURNS TABLE (
 	category varchar(50),
 	description varchar(50),
 	created_on TIMESTAMP,
-	groupname varchar(50)
+	source varchar(50)
 )
 as $$
 SELECT d.id, d.name , d.category, d.description, d.created_on, g.name

@@ -8,5 +8,5 @@ public class DocumentGroup
     public string Description { get; set; }
     public string Category { get; set; }
     public string Source { get; set; }
-    public string SourceType { get; set; }
+    public string Source_Type { get; set; }
 }
