@@ -4,6 +4,7 @@ using DocuStorate.Data.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using DocuStorate.Common.Data.Services;
+using DocuStorage.Data.Dapper.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,15 +25,14 @@ var builder = WebApplication.CreateBuilder(args);
 
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IDocumentService, DocumentService>();
-
-    services.AddScoped<IUserDataService, UserDataService>();
-    services.AddScoped<IDocumentDataService, DocumentDataService>();
-
     services.AddScoped<IGroupService, GroupService>();
-    services.AddScoped<IGroupDataService, GroupDataService>();
 
-    services.AddScoped<IDocumentContentService, DocumentContentService>();
+    services.AddScoped<IUserDataService, UserDataDpService>();
+    services.AddScoped<IGroupDataService, GroupDataDpService>();
+    services.AddScoped<IDocumentDataService, DocumentDataDpService>();
+    services.AddScoped<IDocumentContentService, DocumentContentDpService>();
 
+    services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
 }
 
 var app = builder.Build();

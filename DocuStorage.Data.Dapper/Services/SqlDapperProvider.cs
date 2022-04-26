@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace DocuStorage.Data.Dapper.Services
 {
-    public class SqlDapperProvider<T> : ISqlDataProvider<T>
+    public class SqlDapperProvider : ISqlDataProvider
     {
         public SqlDapperProvider() 
         {
@@ -12,9 +12,12 @@ namespace DocuStorage.Data.Dapper.Services
 
         public ISqlDapperWrapper GetConnection()
         {
-            var connection = new NpgsqlConnection(Configuration.DatabaseConnection());
-            return new SqlDapperWrapper(connection);
+            return new SqlDapperWrapper(new NpgsqlConnection(Configuration.DatabaseConnection()));
+        }
+
+        public ISqlDapperWrapper GetDocumentContentConnection()
+        {
+            return new SqlDapperWrapper(new NpgsqlConnection(Configuration.DatabaseContentConnection()));
         }
     }
-   
 }

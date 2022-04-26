@@ -1,43 +1,36 @@
-﻿namespace DocuStore.Tests;
-using DocuStorate.Data.Services;
+﻿namespace DocuStorage.Tests.Mockups;
+
+using DocuStorage.Data.Dapper.Services;
 using DocuStorate.Common.Data.Model;
 using DocuStorate.Common.Data.Services;
+using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
-
-/// <summary>
-/// Unit for DocumentDataService class
-/// </summary>
 [TestFixture]
-public class DocumentDataTests
+public class DocumentDataIntegrationTest
 {
-    
+
     private const string Default_Filepath = @"data\favicon.ico";
     private const string Default_TestOutput = @"c:\personal\temp\favicon.ico";
     private const int DefaultGroupId = 1;
     private const int DefaultUserId = 1;
-   
+    private const int DefaultDocumentId = 1;
+
 
     private IDocumentDataService _documentService;
     private IGroupDataService _groupDataService;
-    private Document _dummy;
+
     [SetUp]
     public void Setup()
     {
-        _documentService = new DocumentDataService(new DocumentContentService());
-        _groupDataService = new GroupDataService();
-
-        _dummy = _documentService.Create(GetDocument());
+        var sqlDataProvider = new SqlDapperProvider();
+        _documentService = new DocumentDataDpService(sqlDataProvider, new DocumentContentDpService(sqlDataProvider));
+        _groupDataService = new GroupDataDpService(sqlDataProvider);
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        _documentService.Delete(_dummy.Id);
-    }
-
-
-    private Document GetDocument() 
+    private Document GetDocument()
     {
         var bytes = File.ReadAllBytes(Default_Filepath);
         Document document = new Document()
@@ -52,7 +45,7 @@ public class DocumentDataTests
     }
 
     [Test]
-    public void Create_Document_NotEmpty() 
+    public void CreateDelete_Document_NotEmpty()
     {
         var document = GetDocument();
         var response = _documentService.Create(document);
@@ -62,11 +55,11 @@ public class DocumentDataTests
     }
 
     [Test]
-    public void Get_Document_NotNull_ValidContent() 
+    public void Get_Document_NotNull_ValidContent()
     {
-        var dbDocument = _documentService.Get(_dummy.Id);
+        var dbDocument = _documentService.Get(DefaultDocumentId);
         Assert.IsNotNull(dbDocument);
-        File.WriteAllBytes(Default_TestOutput, _dummy.Content);
+        File.WriteAllBytes(Default_TestOutput, dbDocument.Content);
         Assert.IsTrue(File.Exists(Default_TestOutput));
     }
 
@@ -80,7 +73,7 @@ public class DocumentDataTests
     [Test]
     public void Get_DocumentsByUserId_NotEmpty()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         _documentService.AssignToUser(DefaultUserId, documents);
 
         var list = _documentService.GetByUserId(DefaultUserId);
@@ -90,7 +83,7 @@ public class DocumentDataTests
     [Test]
     public void Get_DocumentsByGroupId_NotEmpty()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         _documentService.AssignToGroup(DefaultGroupId, documents);
 
         var list = _documentService.GetByGroupId(DefaultGroupId);
@@ -98,9 +91,9 @@ public class DocumentDataTests
     }
 
     [Test]
-    public void AssignToUser_NoExceptions() 
+    public void AssignToUser_NoExceptions()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         _documentService.AssignToUser(DefaultUserId, documents);
         Assert.IsTrue(true);
     }
@@ -108,7 +101,7 @@ public class DocumentDataTests
     [Test]
     public void AssignToGroup_NoExceptions()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         _documentService.AssignToGroup(DefaultGroupId, documents);
         Assert.IsTrue(true);
     }
@@ -117,9 +110,9 @@ public class DocumentDataTests
     [Test]
     public void Get_InGroupByUser_NotEmpty()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         int[] groups = new int[] { DefaultGroupId };
-        
+
         _documentService.AssignToGroup(DefaultGroupId, documents);
         _groupDataService.AssignToUser(DefaultUserId, groups);
 
@@ -130,28 +123,10 @@ public class DocumentDataTests
     [Test]
     public void All_Get_Available_NotEmpty()
     {
-        int[] documents = new int[] { _dummy.Id };
+        int[] documents = new int[] { DefaultDocumentId };
         _documentService.AssignToGroup(DefaultGroupId, documents);
-        Thread.Sleep(1000);
 
         var list = _documentService.GetAllAvailableUser(DefaultUserId);
         Assert.IsNotEmpty(list);
     }
-
-    [Test]
-    public void Delete_NoExceptions()
-    {
-        try
-        {
-            var dbDocument = _documentService.Create(GetDocument());
-            _documentService.Delete(dbDocument.Id);
-            dbDocument = _documentService.Get(dbDocument.Id);
-            Assert.IsNull(dbDocument);
-        }
-        catch (Exception e)
-        {
-            Assert.Fail(e.Message);
-        }
-    }
 }
-

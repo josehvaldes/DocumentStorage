@@ -13,3 +13,6 @@ AS $$
 SELECT content FROM document_contents WHERE ref_id = did;
 $$
 LANGUAGE SQL;
+
+INSERT INTO document_contents (ref_id, content) VALUES(1, 'Test')
+

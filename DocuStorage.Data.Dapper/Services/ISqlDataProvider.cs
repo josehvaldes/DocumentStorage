@@ -1,7 +1,9 @@
 ﻿namespace DocuStorage.Data.Dapper.Services;
 
-public interface ISqlDataProvider<T>
+public interface ISqlDataProvider
 {
     public ISqlDapperWrapper GetConnection();
+
+    public ISqlDapperWrapper GetDocumentContentConnection();
 
 }

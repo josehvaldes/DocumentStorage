@@ -15,8 +15,6 @@ public class AuthenticateResponse
     public AuthenticateResponse(User user, string token)
     {
         Id = user.Id;
-        FirstName = user.FirstName;
-        LastName = user.LastName;
         Username = user.Username;
         Token = token;
     }

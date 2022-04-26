@@ -70,14 +70,23 @@ public class UsersController : ControllerBase
             return StatusCode(StatusCodes.Status400BadRequest, ModelState);
         }
 
-        var user = _userService.Update(new User()
+        var response = _userService.Update(new User()
         {
             Id = model.Id,
             Username = model.Username,
             Password = model.Password,
             Role = model.Role
         });
-        return Ok(user);
+
+        if (response)
+        {
+            return Ok();
+        }
+        else 
+        {
+            return BadRequest("User not updated");
+        }
+        
     }
 
     [Authorize(Roles = Roles.Admin)]

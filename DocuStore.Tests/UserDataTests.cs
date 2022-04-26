@@ -10,8 +10,7 @@ using DocuStorate.Common.Data.Services;
 [TestFixture]
 public class UserDataTests
 {
-    //private const int DefaultUserId = 1;
-
+ 
     private IUserDataService _userService;
     private User _dummyUser;
     [SetUp]
@@ -78,13 +77,12 @@ public class UserDataTests
         try {
             var newUsername = "NewUsername";
             _dummyUser.Username = newUsername;
-            _userService.Update(_dummyUser);
-            var user = _userService.Get(_dummyUser.Id);
-            Assert.AreEqual(user.Username, newUsername);
+            var response = _userService.Update(_dummyUser);
+            Assert.IsTrue(response);
         }
-        catch (Exception ) 
+        catch (Exception e) 
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }  
     }
 
@@ -98,9 +96,9 @@ public class UserDataTests
             var user = _userService.Get(_dummyUser.Id);
             Assert.IsNull(user);
         } 
-        catch (Exception) 
+        catch (Exception e) 
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }            
     }
 }

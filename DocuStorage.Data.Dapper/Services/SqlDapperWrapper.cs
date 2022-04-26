@@ -23,20 +23,25 @@ public class SqlDapperWrapper : ISqlDapperWrapper
         _connection.Open();
     }
 
-    public int Execute(string sql, object? param)
+    public int Execute(string sql, object? param = null)
     {
         return _connection.Execute(sql, param);
     }
 
 
-    public T ExecuteScalar<T>(string sql, object? param =null)
+    public T ExecuteScalar<T>(string sql, object? param = null)
     {
         return _connection.ExecuteScalar<T>(sql, param);
     }
 
     public IEnumerable<T> Query<T>(string sql, object? param = null) 
     {
-        return _connection.Query<T>("select * from get_groups()", param);
+        return _connection.Query<T>(sql, param);
+    }
+
+    public IEnumerable<dynamic> Query(string sql, object? param = null)
+    {
+        return _connection.Query(sql, param);
     }
 
     #region IDisposable Members 

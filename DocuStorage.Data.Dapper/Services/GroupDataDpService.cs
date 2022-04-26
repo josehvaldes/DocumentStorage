@@ -8,9 +8,9 @@ using Npgsql;
 
 public class GroupDataDpService : IGroupDataService
 {
-    private ISqlDataProvider<Group> _dataProvider;
+    private ISqlDataProvider _dataProvider;
 
-    public GroupDataDpService(ISqlDataProvider<Group> dataProvider) 
+    public GroupDataDpService(ISqlDataProvider dataProvider) 
     {
         _dataProvider = dataProvider;
     }
@@ -19,7 +19,8 @@ public class GroupDataDpService : IGroupDataService
     {
         using var con = _dataProvider.GetConnection();
         con.Open();
-        var rows = con.Execute("select * from assign_groups_to_user(@userId, @groups)", new { userId = userId, groups = groups });
+        var rows = con.Execute("select * from assign_groups_to_user(@userId, @groups)", 
+            new { userId = userId, groups = groups });
     }
 
     public Group Create(Group group)

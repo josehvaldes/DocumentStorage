@@ -44,7 +44,7 @@ public class UserService : IUserService
         return _userdata.Create(user);
     }
 
-    public User Update(User user)
+    public bool Update(User user)
     {
         return _userdata.Update(user);
     }

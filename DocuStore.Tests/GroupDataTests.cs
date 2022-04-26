@@ -72,9 +72,9 @@ public class GroupDataTests
 
             _groupDataService.Delete(group.Id);
         }
-        catch (Exception) 
+        catch (Exception e) 
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 }

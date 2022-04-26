@@ -14,19 +14,20 @@ public class GroupDataMkTest
     public void Create_Group_NotEmpty()
     {
         try {
-            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            
             var dpWrapper = new Mock<ISqlDapperWrapper>();
-
             dpWrapper.Setup(x => x.ExecuteScalar<int>(It.IsAny<string>(), It.IsAny<object?>())).Returns(1);
+
+            var sqlprovider = new Mock<ISqlDataProvider>();
             sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
 
             var groupDataService = new GroupDataDpService(sqlprovider.Object);
             var response = groupDataService.Create(new Group(){Name = "Dapper Group"});
             Assert.AreEqual(response.Id, 1);
         }
-        catch (Exception) 
+        catch (Exception e) 
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 
@@ -38,16 +39,16 @@ public class GroupDataMkTest
             var dpWrapper = new Mock<ISqlDapperWrapper>();
             dpWrapper.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<object?>())).Returns(1);
 
-            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            var sqlprovider = new Mock<ISqlDataProvider>();
             sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
 
             var groupDataService = new GroupDataDpService(sqlprovider.Object);
 
             groupDataService.Delete(1);
         }
-        catch(Exception)
+        catch(Exception e)
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 
@@ -59,7 +60,7 @@ public class GroupDataMkTest
         dpWrapper.Setup(x => x.Query<Group>(It.IsAny<string>(), It.IsAny<object>())).
             Returns(new List<Group>() { new Group() { Name="Moq Test", Id=1 } });
 
-        var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+        var sqlprovider = new Mock<ISqlDataProvider>();
         sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
 
         var groupDataService = new GroupDataDpService(sqlprovider.Object);
@@ -76,7 +77,7 @@ public class GroupDataMkTest
             Returns(new List<Group>() { new Group() { Name = "Moq Test", Id = 1 } });
 
 
-        var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+        var sqlprovider = new Mock<ISqlDataProvider>();
         sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
 
         var groupDataService = new GroupDataDpService(sqlprovider.Object);
@@ -93,7 +94,7 @@ public class GroupDataMkTest
             var dpWrapper = new Mock<ISqlDapperWrapper>();
             dpWrapper.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<object>())).Returns(1);
 
-            var sqlprovider = new Mock<ISqlDataProvider<Group>>();
+            var sqlprovider = new Mock<ISqlDataProvider>();
             sqlprovider.Setup(p => p.GetConnection()).Returns(dpWrapper.Object);
 
             var groupDataService = new GroupDataDpService(sqlprovider.Object);
@@ -102,9 +103,9 @@ public class GroupDataMkTest
             groupDataService.AssignToUser(1, groups);
 
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 

@@ -43,7 +43,7 @@ public class DocumentDataService : IDocumentDataService
 
     public Document Create(Document document)
     {
-        var query = "insert into documents(name, category, description, created_on, content) values (@name, @category, @description, @createdOn, @content) RETURNING id";
+        var query = "insert into documents(name, category, description, created_on) values (@name, @category, @description, @createdOn) RETURNING id";
 
         using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
         con.Open();
@@ -54,8 +54,6 @@ public class DocumentDataService : IDocumentDataService
         cmd.Parameters.AddWithValue("description", (object) document.Description??DBNull.Value);
         cmd.Parameters.AddWithValue("createdOn", DateTime.Now);
            
-        cmd.Parameters.Add("content", NpgsqlTypes.NpgsqlDbType.Bytea, document.Content?.Length??0).Value = document.Content;
-
         var val = cmd.ExecuteScalar();
         document.Id = Int32.Parse(val?.ToString() ?? "0");
 
@@ -90,7 +88,7 @@ public class DocumentDataService : IDocumentDataService
                 Name = reader.GetString(1),
                 Category = reader.IsDBNull(2) ? "" : reader.GetString(2),
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                CreateOn = reader.GetDateTime(4),
+                Created_On = reader.GetDateTime(4),
             };
 
             _documentContentService.GetDocContent(document);
@@ -120,7 +118,7 @@ public class DocumentDataService : IDocumentDataService
                 Name = reader.GetString(1),
                 Category = reader.IsDBNull(2) ? "" : reader.GetString(2),
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                CreateOn = reader.GetDateTime(4),
+                Created_On = reader.GetDateTime(4),
             };
 
             result.Add(document);
@@ -147,7 +145,7 @@ public class DocumentDataService : IDocumentDataService
                 Name = reader.GetString(1),
                 Category = reader.IsDBNull(2) ? "" : reader.GetString(2),
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                CreateOn = reader.GetDateTime(4),
+                Created_On = reader.GetDateTime(4),
             };
 
             list.Add(document);
@@ -175,7 +173,7 @@ public class DocumentDataService : IDocumentDataService
                 Name = reader.GetString(1),
                 Category = reader.IsDBNull(2) ? "" : reader.GetString(2),
                 Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                CreateOn = reader.GetDateTime(4),
+                Created_On = reader.GetDateTime(4),
             };
 
 

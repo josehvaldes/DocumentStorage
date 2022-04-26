@@ -119,7 +119,7 @@ public class UserDataService : IUserDataService
         return users;
     }
 
-    public User Update(User user)
+    public bool Update(User user)
     {
         using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
         con.Open();
@@ -131,9 +131,8 @@ public class UserDataService : IUserDataService
         cmd.Parameters.AddWithValue("role", user.Role);
         cmd.Parameters.AddWithValue("userid", user.Id);
 
-        var val = cmd.ExecuteNonQuery();
-
-        return user;
+        var rows = cmd.ExecuteNonQuery();
+        return rows > 0;
     }
 }
 

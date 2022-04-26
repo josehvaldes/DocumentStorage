@@ -15,7 +15,7 @@ public class GroupDataIntegrationTest
     [SetUp]
     public void Setup() 
     {
-        _groupDataService = new GroupDataDpService(new SqlDapperProvider<Group>());
+        _groupDataService = new GroupDataDpService(new SqlDapperProvider());
     }
 
     private Group GetDummyGroup()
@@ -37,9 +37,9 @@ public class GroupDataIntegrationTest
             Assert.Greater(response.Id, 0);
             _groupDataService.Delete(response.Id);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Assert.Fail("Unexpected Exception");
+            Assert.Fail(e.Message);
         }
 
     }
@@ -52,9 +52,9 @@ public class GroupDataIntegrationTest
             var response = _groupDataService.Create(GetDummyGroup());
             _groupDataService.Delete(response.Id);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 
@@ -68,7 +68,7 @@ public class GroupDataIntegrationTest
     [Test]
     public void GetGroupByUser_IsNotEmpty()
     {
-        var list = _groupDataService.GetByUser(1);
+        var list = _groupDataService.GetByUser(DefaultUserId);
         Assert.IsNotEmpty(list);
     }
 
@@ -83,9 +83,9 @@ public class GroupDataIntegrationTest
 
             _groupDataService.Delete(group.Id);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Assert.Fail();
+            Assert.Fail(e.Message);
         }
     }
 }
