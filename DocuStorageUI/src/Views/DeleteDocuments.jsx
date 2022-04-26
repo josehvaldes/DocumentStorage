@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import * as React from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { useForm } from "react-hook-form";
 import { usersAtom, documentsAtom } from '_state';
 import { useUserActions } from '_actions';
@@ -12,6 +12,9 @@ export { DeleteDocuments }
 function DeleteDocuments()
 {
     var documents = useRecoilValue(documentsAtom);
+
+    const [docs, setDocs] = useRecoilState(documentsAtom);
+
     const userActions = useUserActions();
 
 
@@ -25,10 +28,9 @@ function DeleteDocuments()
         var name = event.target.name;
         userActions.deleteDocument(id, name).then(result =>
         {
-            document.getElementById("row_" + id).remove();
-            window.location.reload(false);
+            var newDocs = docs.filter(item => item.id !== parseInt(id));
+            setDocs(newDocs)
         });
-        userActions.getAllDocuments();
     }
 
     return (
