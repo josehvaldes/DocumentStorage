@@ -20,6 +20,7 @@
  
 	- DocuStorage\appsettings.json
 	- DocuStore.Tests\appsettings.json
+	- DocuStorage.Tests.Mockups\appsettings.json
 	
 	For the WebAPI use the "postgresql" connection string key
 	For the Document Content use the  "contentdb" connection string key
@@ -36,11 +37,16 @@
     > npm start 
 	For DocuStorage deploy it as a WebApi Application
  
- 9. Enjoy your app. Read the Usermanual.pdf for more details
+ 9. There are two different Data Layer libraries to demonstrate how ease will be to implement a new one using a different DBMS or ORM library
+     - DocuStorage.Data, uses ADO.Net directly
+	 - DocuStorage.Data.Dapper, uses Dapper library
+	Each data layer library has their own testing library.
+	
+ 10. The DocuStorage.Data.Dapper library has two test fixtures. One to test the integration between the Data layer and the Database. The other to test the functionality using Moq.
 
 
 Usage: 
   In the login page use the following credentials
    username: root
    password: root123
- 
+
