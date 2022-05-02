@@ -1,3 +1,9 @@
+
+DROP DATABASE IF EXISTS docucontent;
+CREATE DATABASE docucontent;
+
+\c docucontent
+
 CREATE TABLE document_contents (
 	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
 	ref_id int unique not null,

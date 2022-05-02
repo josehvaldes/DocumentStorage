@@ -11,10 +11,9 @@
  3. Go to the 'Database' folder in your local repository and run the scripts on your new database in the following order:
 	For the Web API 
     - DocuStorage.sql
-	- DocuStorateData.sql
 	
 	For the Document Content
-	- DocumentContent.sql
+	- DocuContent.sql
  
  4. Go to your code repository and edit the appsettings.json files. Change the ConnectionStrings value with your database information
  
