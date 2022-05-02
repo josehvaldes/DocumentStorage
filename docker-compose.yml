@@ -19,22 +19,15 @@ services:
       target: dev
     image: docustorageui:dev
     depends_on:
-      - db
+      - webapi
     ports:
       - 3000:3000
-    environment:
-      NODE_ENV: dev
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: postgres
     links:
-      - db
+      - webapi
     volumes:
       - './:/src'    
   webapi:
-    container_name: docustorageapi
+    container_name: docustorage
     build:
       context: ./
       target: dev
@@ -42,10 +35,10 @@ services:
     depends_on:
       - db
     ports:
-      - 4000:4000
+      - 4000:80
     environment:
       NODE_ENV: dev
-      DB_HOST: db
+      DB_HOST: localhost
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: postgres

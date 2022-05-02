@@ -13,7 +13,7 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
   webapi:
-    container_name: docustorageapi
+    container_name: docustorage
     build:
       context: ./
       target: dev
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     ports:
-      - 4000:4000
+      - 4000:80
     environment:
       NODE_ENV: dev
       DB_HOST: db
