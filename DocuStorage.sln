@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Common", "DocuS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Tests", "DocuStore.Tests\DocuStorage.Tests.csproj", "{405F2E8B-13AE-4C31-85DA-7721BF4DD9D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuStorage.Common.Data", "DocuStorage.Common.Data\DocuStorage.Common.Data.csproj", "{126C668B-0780-461C-9FA8-A77F6DD3AF16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Common.Data", "DocuStorage.Common.Data\DocuStorage.Common.Data.csproj", "{126C668B-0780-461C-9FA8-A77F6DD3AF16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuStorage.Data.Dapper", "DocuStorage.Data.Dapper\DocuStorage.Data.Dapper.csproj", "{DB923E34-A2DB-4CD1-9A4F-753498F1419A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Data.Dapper", "DocuStorage.Data.Dapper\DocuStorage.Data.Dapper.csproj", "{DB923E34-A2DB-4CD1-9A4F-753498F1419A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuStorage.Tests.Mockups", "DocuStorage.Tests.Mockups\DocuStorage.Tests.Mockups.csproj", "{04345821-1B4D-4A2D-8489-A14EF043AEFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.Tests.Mockups", "DocuStorage.Tests.Mockups\DocuStorage.Tests.Mockups.csproj", "{04345821-1B4D-4A2D-8489-A14EF043AEFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,38 @@
+#docker-compose-pg-only.yml
+version: '3.8'
+services:
+  db:
+    container_name: docustoragedb
+    image: docustoragedb:dev
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+  webapi:
+    container_name: docustorageapi
+    build:
+      context: ./
+      target: dev
+    image: docustorage:dev
+    depends_on:
+      - db
+    ports:
+      - 4000:4000
+    environment:
+      NODE_ENV: dev
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+    links:
+      - db
+    volumes:
+      - './:/src'
+volumes:
+  db:
+    driver: local
