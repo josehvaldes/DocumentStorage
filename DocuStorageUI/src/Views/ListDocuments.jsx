@@ -41,7 +41,7 @@ function ListDocuments()
             {userDocs && userDocs.length > 0 &&
                 <div className="form-group ">
                     <h4>Documents assigned to User</h4>
-                <table className="documentable">
+                <table className="documentable table table-striped">
                     <thead>
                         <tr>
                                 <th>Name</th>
@@ -67,14 +67,17 @@ function ListDocuments()
             {groupDocs && groupDocs.length > 0 &&
                 <div className="form-group ">
                     <h4>Documents assigned to Groups</h4>
-                        <table className="documentable">
-                            <tr>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>Group</th>
-                                <th></th>
-                            </tr>
+                <table className="documentable table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Group</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                             {groupDocs.map(doc =>
                                 <tr key={doc.id}>
                                     <td>{doc.name}</td>
@@ -83,9 +86,9 @@ function ListDocuments()
                                     <td>{doc.source}</td>
                                     <td><a href="#" id={doc.id} name={doc.name} onClick={download}> Download</a></td>
                                 </tr>
-                            )}
-                        </table>
-                    
+                        )}
+                    </tbody>
+                </table>
                 </div>
             }
             

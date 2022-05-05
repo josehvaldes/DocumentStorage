@@ -39,7 +39,7 @@ function DeleteDocuments()
             {documents && documents.length > 0 &&
                 <div className="form-group ">
                     <h4>Documents assigned to Groups</h4>
-                <table className="documentable">
+                <table className="documentable table table-striped">
                      <thead>
                         <tr>
                             <th>Name</th>

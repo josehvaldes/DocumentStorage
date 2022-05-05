@@ -49,3 +49,26 @@ Usage:
    username: root
    password: root123
 
+
+DOCKER SUPPORT
+
+To implement the Docker support follow the next instructions:
+1. Build the database images using the "Database/Dockerfile" file with the name "docustoragedb:dev"
+
+#build
+> docker build -t docustoragedb:dev -f ./Database/Dockerfile . 
+
+2. Build the webapi image using the "DocuStorage/Dockerfile" file with the name "docustorage:dev"
+
+#build
+> docker build -t docustorage:dev -f ./DocuStorage/Dockerfile .
+
+
+3. Build the UI images using the "DocuStorageUI/Dockerfile" file with the name "docustorageui:dev"
+
+#Build
+> docker build -t docustorageui:dev -f ./DocuStorageUI/Dockerfile .
+
+As soon as the images are registered in your docke, you can run the docker-compose command using the docker-compose.yml. 
+If you want to run the API only use the api-docker-compose.yml file.
+
