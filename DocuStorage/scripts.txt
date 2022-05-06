@@ -1,0 +1,55 @@
+
+#####To build the database#####
+docker build -t docustoragedb:dev . 
+
+#to start
+docker run --name docustoragedb --rm -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -it docustoragedb:dev
+
+#to enter
+docker exec -it docustoragedb /bin/sh
+
+
+#build api
+docker build -t docustorage:dev -f ./DocuStorage/Dockerfile .
+
+#run api
+docker run -it -p 4000:80 --name docustorage --rm docustorage:dev
+
+
+#React UI:
+docker build -t docustorageui:dev .
+docker run -it --rm -v %cd%:/app -v /app/node_modules -p 3000:3000 -e CHOKIDAR_USEPOLLING=true docustorageui:dev
+
+
+
+
+#docker-compose
+docker-compose -f docker-compose.yml up
+docker-compose -f api-docker-compose.yml up
+
+
+* * * * * * * * * * * * *
+Kubernetes
+
+kb create deployment docustorageui-deploy --image=pepuso/docustorageui:dev --dry-run=client -o yaml > docustorageui.yml
+
+kb create deployment docustorage-deploy --image=pepuso/docustorage:dev --dry-run=client -o yaml > docustorage.yml
+
+
+kb create deployment docustorage-deploy --image=pepuso/docustoragedb:dev --dry-run=client -o yaml > docustoragedb.yml
+
+
+UI
+1. Create the deployment
+- kb apply -f docustorageui.yml
+
+See details
+kb exec -ti kubernetes-bootcamp-5fdcfc76ff-mc7n6 -- env
+
+expose the UI service
+kb expose deployment/docustorageui-deploy --type="NodePort" --port=3000
+
+
+API
+- kb apply -f docustorage.yml
+- kb expose deployment/docustorage-deploy --type="NodePort" --port=80

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: docustorage-deploy
+  name: docustorage-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docustorage-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: docustorage-deploy
+    spec:
+      containers:
+      - image: pepuso/docustorage:dev
+        name: docustorage
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}

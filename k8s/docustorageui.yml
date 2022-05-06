@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: docustorageui-deploy
+  name: docustorageui-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docustorageui-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: docustorageui-deploy
+    spec:
+      containers:
+      - image: pepuso/docustorageui:dev
+        name: docustorageui
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
