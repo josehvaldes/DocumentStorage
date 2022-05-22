@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DocuStorage.Common.Data\DocuStorage.Common.Data.csproj" />
     <ProjectReference Include="..\DocuStorage.Data.Dapper\DocuStorage.Data.Dapper.csproj" />
+    <ProjectReference Include="..\DocuStorage.DataContent.S3\DocuStorage.DataContent.S3.csproj" />
   </ItemGroup>
 
   <ItemGroup>
