@@ -1,9 +1,9 @@
 ﻿namespace DocuStorage.Tests.Mockups;
 
-using DocuStorate.Common.Data.Model;
+using DocuStorage.Common.Data.Model;
 using DocuStorage.Data.Dapper.Services;
 using NUnit.Framework;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Services;
 using Moq;
 
 public class DocumentContentMkTest
@@ -53,11 +53,12 @@ public class DocumentContentMkTest
         }
     }
 
+    [Test]
     public void GetContent_IsValid()
     {
         var document = new Document()
         {
-            Id = 91,
+            Id = 1,
         };
 
         try

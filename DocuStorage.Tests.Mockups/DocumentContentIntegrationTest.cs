@@ -1,10 +1,11 @@
 ﻿namespace DocuStorage.Tests.Mockups;
 
-using DocuStorate.Common.Data.Model;
+using DocuStorage.Common.Data.Model;
 using DocuStorage.Data.Dapper.Services;
 using NUnit.Framework;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Services;
 
+[TestFixture]
 public class DocumentContentIntegrationTest
 {
     private const string Default_Filepath = @"data\favicon.ico";

@@ -1,7 +1,7 @@
 ﻿namespace DocuStorage.Tests.Mockups;
 
 using DocuStorage.Data.Dapper.Services;
-using DocuStorate.Common.Data.Model;
+using DocuStorage.Common.Data.Model;
 using NUnit.Framework;
 using System;
 

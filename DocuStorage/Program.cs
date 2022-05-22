@@ -1,9 +1,9 @@
 ﻿using DocuStorage.Helpers;
 using DocuStorage.Services;
-using DocuStorate.Data.Services;
+using DocuStorage.Data.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Services;
 using DocuStorage.Data.Dapper.Services;
 
 var builder = WebApplication.CreateBuilder(args);

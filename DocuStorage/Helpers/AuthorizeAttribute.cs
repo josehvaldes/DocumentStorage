@@ -1,6 +1,6 @@
 namespace DocuStorage.Helpers;
 
-using DocuStorate.Common.Data.Model;
+using DocuStorage.Common.Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using DocuStorage.Services;
 using DocuStorage.Models;
 using DocuStorage.Helpers;
-using DocuStorate.Common.Data.Model;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 
 [ApiController]
 [Route("[controller]")]

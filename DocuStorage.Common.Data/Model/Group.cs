@@ -1,4 +1,4 @@
-﻿namespace DocuStorate.Common.Data.Model;
+﻿namespace DocuStorage.Common.Data.Model;
 
 public class Group
 {

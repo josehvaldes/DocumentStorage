@@ -69,6 +69,6 @@ To implement the Docker support follow the next instructions:
 #Build
 > docker build -t docustorageui:dev -f ./DocuStorageUI/Dockerfile .
 
-As soon as the images are registered in your docke, you can run the docker-compose command using the docker-compose.yml. 
-If you want to run the API only use the api-docker-compose.yml file.
+As soon as the images are registered in your docker, you can run the docker-compose command using the docker-compose.yml. 
+If you want to run the API only, use the api-docker-compose.yml file.
 

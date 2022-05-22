@@ -1,8 +1,8 @@
 ﻿namespace DocuStorage.Data.Dapper.Services;
 
 using DocuStorage.Common;
-using DocuStorate.Common.Data.Model;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 using global::Dapper;
 using Npgsql;
 

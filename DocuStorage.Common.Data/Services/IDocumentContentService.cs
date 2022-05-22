@@ -1,11 +1,11 @@
-﻿namespace DocuStorate.Common.Data.Services;
+﻿namespace DocuStorage.Common.Data.Services;
 
-using DocuStorate.Common.Data.Model;
+using DocuStorage.Common.Data.Model;
 
 public interface IDocumentContentService
 {
     void GetDocContent(Document document);
-    void SaveDocContent(Document document);
-    void DeleteContent(int documentId);
+    Task SaveDocContent(Document document);
+    Task DeleteContent(int documentId);
 }
 

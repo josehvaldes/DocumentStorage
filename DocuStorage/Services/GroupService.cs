@@ -1,8 +1,8 @@
 ﻿namespace DocuStorage.Services;
 
 using DocuStorage.Models;
-using DocuStorate.Common.Data.Model;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 
 
 public class GroupService : IGroupService

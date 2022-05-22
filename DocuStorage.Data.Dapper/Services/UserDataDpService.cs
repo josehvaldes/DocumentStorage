@@ -1,6 +1,6 @@
 ﻿namespace DocuStorage.Data.Dapper.Services;
-using DocuStorate.Common.Data.Model;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 using Npgsql;
 using System;
 using System.Collections.Generic;

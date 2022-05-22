@@ -1,7 +1,7 @@
 ﻿namespace DocuStorage.Data.Dapper.Services;
 
-using DocuStorate.Common.Data.Model;
-using DocuStorate.Common.Data.Services;
+using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 using System;
 
 public class DocumentContentDpService : IDocumentContentService
@@ -13,7 +13,7 @@ public class DocumentContentDpService : IDocumentContentService
         _dataProvider = dataProvider;
     }
 
-    public void DeleteContent(int documentId)
+    public Task DeleteContent(int documentId)
     {
         using var con = _dataProvider.GetDocumentContentConnection();
         con.Open();
@@ -23,6 +23,8 @@ public class DocumentContentDpService : IDocumentContentService
         {
             throw new Exception("Row not found");
         }
+
+        return Task.CompletedTask;
     }
 
     public void GetDocContent(Document document)
@@ -36,7 +38,7 @@ public class DocumentContentDpService : IDocumentContentService
         document.Content = result?.content;
     }
 
-    public void SaveDocContent(Document document)
+    public Task SaveDocContent(Document document)
     {
         using var con = _dataProvider.GetDocumentContentConnection();
         con.Open();
@@ -48,5 +50,7 @@ public class DocumentContentDpService : IDocumentContentService
         {
             throw new Exception("Invalid Id returned for document content");
         }
+
+        return Task.CompletedTask;
     }
 }
