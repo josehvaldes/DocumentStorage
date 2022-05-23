@@ -9,22 +9,33 @@ using Amazon.S3.Model;
 public class S3DocumentContentService : IDocumentContentService
 {
     private AmazonS3Client _S3Client;
+    private IS3Cache _s3Cache;
 
     private readonly string _s3BucketName = Configuration.AWSBucketName();
     private readonly string _awsAccessKey = Configuration.AWSAccessKey();
     private readonly string _awsSecretKey = Configuration.AWSSecretKey();
     private readonly string _awsRegion = Configuration.AWSRegion();
 
-    public S3DocumentContentService() 
+    public S3DocumentContentService(IS3Cache s3Cache) 
     {
+        _s3Cache = s3Cache;
+
         AmazonS3Config config = new AmazonS3Config();
         config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(_awsRegion);
 
         _S3Client = new AmazonS3Client(_awsAccessKey, _awsSecretKey, config);
     }
 
+
     public async Task SaveDocContent(Document document)
     {
+        var id = document.Id.ToString();
+        if (_s3Cache.Contains(id)) 
+        {
+            await DeleteContent(document.Id);
+            _s3Cache.Remove(id);
+        }
+
         PutObjectRequest request = new PutObjectRequest() 
         {
             BucketName = _s3BucketName,
@@ -36,11 +47,18 @@ public class S3DocumentContentService : IDocumentContentService
         request.Metadata.Add("FileName", document.Name);
 
         await _S3Client.PutObjectAsync(request);
+        _s3Cache.Add(id, document.Content);
     }
 
     public async Task DeleteContent(int documentId)
     {
-        var deleteRequest = new DeleteObjectRequest() 
+        var id = documentId.ToString();
+        if (_s3Cache.Contains(id))
+        {
+            _s3Cache.Remove(id);
+        }
+
+        var deleteRequest = new DeleteObjectRequest()
         {
             BucketName = _s3BucketName,
             Key = documentId.ToString(),
@@ -51,16 +69,57 @@ public class S3DocumentContentService : IDocumentContentService
 
     public void GetDocContent(Document document)
     {
-        var request = new GetObjectRequest() 
-        {
-            BucketName = _s3BucketName,
-            Key = document.Id.ToString(),
-        };
+        var id = document.Id.ToString();
 
-        using MemoryStream ms = new MemoryStream();
-        using GetObjectResponse response = _S3Client.GetObjectAsync(request).Result;
-        using Stream stream = response.ResponseStream;
-        stream.CopyTo(ms);
-        document.Content = ms.ToArray();
+        if (_s3Cache.Contains(id))
+        {
+            document.Content = _s3Cache.GetData(id) ?? null;
+        }
+        else 
+        {
+            if (ExistsObject(id)) 
+            {
+                var request = new GetObjectRequest()
+                {
+                    BucketName = _s3BucketName,
+                    Key = document.Id.ToString(),
+                };
+
+                using MemoryStream ms = new MemoryStream();
+                using GetObjectResponse response = _S3Client.GetObjectAsync(request).Result;
+                using Stream stream = response.ResponseStream;
+                stream.CopyTo(ms);
+                document.Content = ms.ToArray();
+                _s3Cache.Add(id, document.Content);
+            }
+        }
+    }
+
+    public bool ExistsObject(string documentId)
+    {
+        try
+        {
+            var response = _S3Client.GetObjectMetadataAsync(
+                new GetObjectMetadataRequest()
+                {
+                    BucketName = _s3BucketName,
+                    Key = documentId
+                }).Result;
+
+            return true;
+        }
+        catch (Exception ex) 
+        {
+            var s3x = ex.InnerException as AmazonS3Exception;
+            if ( s3x!=null ) 
+            {
+                if (s3x.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return false;
+
+            }
+
+            //status wasn't not found, so throw the exception
+            throw;
+        }        
     }
 }

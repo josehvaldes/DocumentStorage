@@ -14,6 +14,8 @@ public class S3ContentIntegrationTests
     [Test]
     public void SaveDocument_NoExceptions() 
     {
+        IS3Cache cache = new S3Cache();
+
         var bytes = File.ReadAllBytes(Default_Filepath);
         var document = new Document()
         {
@@ -24,7 +26,7 @@ public class S3ContentIntegrationTests
 
         try 
         {
-            var s3Service = new S3DocumentContentService();
+            var s3Service = new S3DocumentContentService(cache);
             var task = s3Service.SaveDocContent(document);
             task.Wait();
         }
@@ -39,9 +41,12 @@ public class S3ContentIntegrationTests
     {
         try
         {
-            int documentId = 1;
-            var s3Service = new S3DocumentContentService();
-            var task = s3Service.DeleteContent(documentId);
+            string documentId = "1";
+            IS3Cache cache = new S3Cache();
+            cache.Add(documentId, new byte[1]);
+
+            var s3Service = new S3DocumentContentService(cache);
+            var task = s3Service.DeleteContent(int.Parse(documentId) );
             task.Wait();
         }
         catch (Exception)
@@ -59,7 +64,10 @@ public class S3ContentIntegrationTests
             {
                 Id = 1,
             };
-            var s3Service = new S3DocumentContentService();
+
+            IS3Cache cache = new S3Cache();
+            
+            var s3Service = new S3DocumentContentService(cache);
             s3Service.GetDocContent(document);
             
             File.WriteAllBytes(Default_TestOutput, document.Content);
@@ -68,6 +76,30 @@ public class S3ContentIntegrationTests
         catch (Exception) 
         {
             Assert.Fail();   
+        }
+    }
+
+
+    [Test]
+    public void GetDocContent_InValidContent()
+    {
+        try
+        {
+            var document = new Document()
+            {
+                Id = 2,
+            };
+
+            IS3Cache cache = new S3Cache();
+
+            var s3Service = new S3DocumentContentService(cache);
+            s3Service.GetDocContent(document);
+
+            Assert.IsNull(document.Content);
+        }
+        catch (Exception)
+        {
+            Assert.Fail();
         }
     }
 

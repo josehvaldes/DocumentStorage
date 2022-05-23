@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using System.Reflection;
 using DocuStorage.Common.Data.Services;
 using DocuStorage.Data.Dapper.Services;
+using DocuStorage.DataContent.S3;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,9 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IGroupDataService, GroupDataDpService>();
     services.AddScoped<IDocumentDataService, DocumentDataDpService>();
     services.AddScoped<IDocumentContentService, DocumentContentDpService>();
-
     services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
+
+    services.AddSingleton<IS3Cache, S3Cache>();
 }
 
 var app = builder.Build();
