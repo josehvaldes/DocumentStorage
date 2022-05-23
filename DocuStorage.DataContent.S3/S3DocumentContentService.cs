@@ -39,7 +39,7 @@ public class S3DocumentContentService : IDocumentContentService
         PutObjectRequest request = new PutObjectRequest() 
         {
             BucketName = _s3BucketName,
-            Key = document.Id.ToString(),
+            Key = id,
         };
         
         using var ms = new MemoryStream(document.Content);
@@ -61,7 +61,7 @@ public class S3DocumentContentService : IDocumentContentService
         var deleteRequest = new DeleteObjectRequest()
         {
             BucketName = _s3BucketName,
-            Key = documentId.ToString(),
+            Key = id,
         };
 
         await _S3Client.DeleteObjectAsync(deleteRequest);
@@ -73,7 +73,7 @@ public class S3DocumentContentService : IDocumentContentService
 
         if (_s3Cache.Contains(id))
         {
-            document.Content = _s3Cache.GetData(id) ?? null;
+            document.Content = _s3Cache.GetData(id);
         }
         else 
         {
@@ -115,10 +115,9 @@ public class S3DocumentContentService : IDocumentContentService
             {
                 if (s3x.StatusCode == System.Net.HttpStatusCode.NotFound)
                     return false;
-
             }
 
-            //status wasn't not found, so throw the exception
+            //status wasn't 'not found', so throw the exception
             throw;
         }        
     }
