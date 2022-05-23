@@ -72,3 +72,13 @@ To implement the Docker support follow the next instructions:
 As soon as the images are registered in your docker, you can run the docker-compose command using the docker-compose.yml. 
 If you want to run the API only, use the api-docker-compose.yml file.
 
+
+
+AWS S3 SUPPORT
+
+To use the S3 Support module, replace the IDocumentContentService implementation in the Services Scope and use the new S3DocumentContentService
+
+
+KUBERNETES SUPPORT
+
+To deploy the services in a kubernetes environment use the yaml manifest in k8s folder and configure the deployments as you wish.
