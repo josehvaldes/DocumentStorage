@@ -39,5 +39,11 @@ namespace DocuStorage.Common
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["AWS:Region"];
         }
+
+        public static string RedisConfig()
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            return configuration["Redis:configuration"];
+        }
     }
 }

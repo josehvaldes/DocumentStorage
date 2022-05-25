@@ -10,11 +10,17 @@ public class S3ContentIntegrationTests
     private const string Default_Name = @"Default.jpg";
     private const string Default_Filepath = @"data\Default.jpg";
     private const string Default_TestOutput = @"c:\personal\temp\Default.jpg";
+    private IS3Cache _cache;
+
+    [SetUp]
+    public void Setup() 
+    {
+        _cache = new RedisCache();
+    }
 
     [Test]
     public void SaveDocument_NoExceptions() 
     {
-        IS3Cache cache = new S3Cache();
 
         var bytes = File.ReadAllBytes(Default_Filepath);
         var document = new Document()
@@ -26,7 +32,7 @@ public class S3ContentIntegrationTests
 
         try 
         {
-            var s3Service = new S3DocumentContentService(cache);
+            var s3Service = new S3DocumentContentService(_cache);
             var task = s3Service.SaveDocContent(document);
             task.Wait();
         }
@@ -42,10 +48,9 @@ public class S3ContentIntegrationTests
         try
         {
             string documentId = "1";
-            IS3Cache cache = new S3Cache();
-            cache.Add(documentId, new byte[1]);
+            _cache.Add(documentId, new byte[1]);
 
-            var s3Service = new S3DocumentContentService(cache);
+            var s3Service = new S3DocumentContentService(_cache);
             var task = s3Service.DeleteContent(int.Parse(documentId) );
             task.Wait();
         }
@@ -65,17 +70,15 @@ public class S3ContentIntegrationTests
                 Id = 1,
             };
 
-            IS3Cache cache = new S3Cache();
-            
-            var s3Service = new S3DocumentContentService(cache);
+            var s3Service = new S3DocumentContentService(_cache);
             s3Service.GetDocContent(document);
             
             File.WriteAllBytes(Default_TestOutput, document.Content);
             Assert.IsTrue(File.Exists(Default_TestOutput));
         } 
-        catch (Exception) 
+        catch (Exception ex) 
         {
-            Assert.Fail();   
+            Assert.Fail(ex.Message);   
         }
     }
 
@@ -90,16 +93,13 @@ public class S3ContentIntegrationTests
                 Id = 2,
             };
 
-            IS3Cache cache = new S3Cache();
-
-            var s3Service = new S3DocumentContentService(cache);
+            var s3Service = new S3DocumentContentService(_cache);
             s3Service.GetDocContent(document);
-
             Assert.IsNull(document.Content);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Assert.Fail();
+            Assert.Fail(ex.Message);
         }
     }
 

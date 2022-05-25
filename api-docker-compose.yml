@@ -1,6 +1,12 @@
 #docker-compose-pg-only.yml
 version: '3.8'
 services:
+  redis:
+    container_name: rediscache
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
   db:
     container_name: docustoragedb
     image: docustoragedb:dev
@@ -20,6 +26,7 @@ services:
     image: docustorage:dev
     depends_on:
       - db
+      - redis
     ports:
       - 4000:80
     environment:
