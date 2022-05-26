@@ -115,5 +115,23 @@ public class DocumentsController : ControllerBase
             return BadRequest(ex.Message);
         }        
     }
+
+    [Authorize(Roles = Roles.Admin)]
+    [HttpPost("{id}/backup")]
+    public IActionResult Backup(int id) 
+    {
+        try 
+        {
+            if (_documentService.Backup(id)) 
+            {
+                return Ok();
+            }
+            return Ok("Document already exists as backup");
+        } catch (Exception ex) 
+        {
+            return BadRequest(ex.Message);
+        }        
+    }
+
 }
 

@@ -1,5 +1,6 @@
 ﻿namespace DocuStorage.DataContent.S3;
 
+using DocuStorage.Common.Data.Services;
 using System.Collections.Generic;
 
 public class S3Cache : IS3Cache

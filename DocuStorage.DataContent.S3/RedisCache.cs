@@ -1,6 +1,7 @@
 ﻿namespace DocuStorage.DataContent.S3;
 
 using DocuStorage.Common;
+using DocuStorage.Common.Data.Services;
 using StackExchange.Redis;
 using System;
 

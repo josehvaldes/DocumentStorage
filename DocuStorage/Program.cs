@@ -1,11 +1,11 @@
 ﻿using DocuStorage.Helpers;
 using DocuStorage.Services;
-using DocuStorage.Data.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using DocuStorage.Common.Data.Services;
 using DocuStorage.Data.Dapper.Services;
 using DocuStorage.DataContent.S3;
+using DocuStorage.DAzure.DStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
 
     services.AddSingleton<IS3Cache, RedisCache>();
+    services.AddSingleton<IBackup, ContainerBackup>();
 }
 
 var app = builder.Build();

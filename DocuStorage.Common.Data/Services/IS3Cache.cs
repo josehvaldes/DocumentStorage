@@ -1,4 +1,4 @@
-﻿namespace DocuStorage.DataContent.S3;
+﻿namespace DocuStorage.Common.Data.Services;
 
 using System;
 using System.Collections.Generic;

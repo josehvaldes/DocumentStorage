@@ -45,5 +45,16 @@ namespace DocuStorage.Common
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["Redis:configuration"];
         }
+
+        public static string AzureStorageConnection() 
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            return configuration["Azure:StorageConnection"];
+        }
+        public static string AzureContainerName()
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            return configuration["Azure:ContainerName"];
+        }
     }
 }

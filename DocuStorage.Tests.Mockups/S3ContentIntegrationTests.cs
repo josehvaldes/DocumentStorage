@@ -1,4 +1,5 @@
 ﻿using DocuStorage.Common.Data.Model;
+using DocuStorage.Common.Data.Services;
 using DocuStorage.DataContent.S3;
 using NUnit.Framework;
 

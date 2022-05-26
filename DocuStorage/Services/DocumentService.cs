@@ -8,10 +8,12 @@ using DocuStorage.Common.Data.Services;
 public class DocumentService : IDocumentService
 {
     private IDocumentDataService _documentService;
+    private IBackup _backup;
 
-    public DocumentService(IDocumentDataService documentService)
+    public DocumentService(IDocumentDataService documentService, IBackup backup)
     {
         _documentService = documentService;
+        _backup = backup;
     }
 
     public void AssignToGroup(int groupId, int[] documents)
@@ -76,6 +78,11 @@ public class DocumentService : IDocumentService
     public void Delete(int id)
     {
         _documentService.Delete(id);
+    }
+
+    public bool Backup(int id)
+    {
+        return _backup.Backup(id);
     }
 }
 
