@@ -73,10 +73,13 @@ As soon as the images are registered in your docker, you can run the docker-comp
 If you want to run the API only, use the api-docker-compose.yml file.
 
 
-
 AWS S3 SUPPORT
 
-To use the S3 Support module, replace the IDocumentContentService implementation in the Services Scope and use the new S3DocumentContentService
+To use the S3 Support module, replace the IDocumentContentService implementation in the Services Scope and use the new S3DocumentContentService. Update the appsettings.json with your AWS AccessKey and SecretKey
+
+
+Azure SUPPORT
+Update your storage connetion string in the appsettings.json. Edit the ContainerName if necessary. 
 
 
 KUBERNETES SUPPORT
