@@ -106,7 +106,7 @@ function useUserActions () {
 
     function createGroup(group)
     {
-        return fetchWrapper.post(`${baseGroupUrl}/create`, group).then(response => {
+        return fetchWrapper.post(`${baseGroupUrl}/`, group).then(response => {
             history.push('/success');
             return response;
         });
@@ -128,7 +128,7 @@ function useUserActions () {
 
     function createUser(user)
     {
-        return fetchWrapper.post(`${baseUrl}/create`, user).then(response => {
+        return fetchWrapper.post(`${baseUrl}/`, user).then(response => {
             history.push('/success');
             return response;
         });

@@ -35,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
 
     services.AddSingleton<IS3Cache, RedisCache>();
-    services.AddSingleton<IBackup, ContainerBackup>();
+    services.AddScoped<IBackup, ContainerBackup>();
 }
 
 var app = builder.Build();

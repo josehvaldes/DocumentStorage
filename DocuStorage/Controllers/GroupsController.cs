@@ -42,7 +42,7 @@ public class GroupsController : ControllerBase
     }
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpPost("create")]
+    [HttpPost]
     public IActionResult Create(GroupRequest request)
     {
         if (!ModelState.IsValid)

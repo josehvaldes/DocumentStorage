@@ -44,7 +44,7 @@ public class UsersController : ControllerBase
 
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpPost("create")]
+    [HttpPost]
     public IActionResult Create(UserRequest model)
     {
         if (!ModelState.IsValid) 
@@ -62,7 +62,7 @@ public class UsersController : ControllerBase
     }
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpPost("Update")]
+    [HttpPut]
     public IActionResult Update(UserRequest model)
     {
         if (!ModelState.IsValid)
