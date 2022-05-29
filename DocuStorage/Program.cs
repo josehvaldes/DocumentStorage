@@ -51,5 +51,8 @@ var app = builder.Build();
     app.MapControllers();
 }
 
+//Use this for VS debugging
 //app.Run("http://localhost:4000");
+
+//Use this for docker deployment
 app.Run();

@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.DataContent.S3"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorage.DAzure.DStorage", "DocuStorage.DAzure.DStorage\DocuStorage.DAzure.DStorage.csproj", "{59FF5D14-AFB9-4720-B2A4-51E2908AC8E5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocuStorageAD", "DocuStorageAD\DocuStorageAD.csproj", "{E1A3F2F8-2DB9-438F-AB8A-AED6DDB62AB6}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "DocuStorageUIAZ", "DocustorageUIAZ\DocuStorageUIAZ.esproj", "{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,16 @@ Global
 		{59FF5D14-AFB9-4720-B2A4-51E2908AC8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59FF5D14-AFB9-4720-B2A4-51E2908AC8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FF5D14-AFB9-4720-B2A4-51E2908AC8E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A3F2F8-2DB9-438F-AB8A-AED6DDB62AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A3F2F8-2DB9-438F-AB8A-AED6DDB62AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A3F2F8-2DB9-438F-AB8A-AED6DDB62AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A3F2F8-2DB9-438F-AB8A-AED6DDB62AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F268887-2E1C-4F0F-A820-4ADA8C7FC34E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

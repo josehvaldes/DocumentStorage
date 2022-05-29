@@ -18,8 +18,6 @@ function ListDocuments()
     const userActions = useUserActions();
 
     useEffect(() => {
-        userActions.getAll();
-        userActions.getAllDocuments();
 
         userActions.getDocumentsByUser(auth?.id);
         userActions.getDocumentsInGroupsByUser(auth?.id);

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-DocuStorageAD-5782A8B9-0E1A-4474-A79E-818526E7EA27</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.16.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocuStorage.Common.Data\DocuStorage.Common.Data.csproj" />
+    <ProjectReference Include="..\DocuStorage.Common\DocuStorage.Common.csproj" />
+    <ProjectReference Include="..\DocuStorage.Data.Dapper\DocuStorage.Data.Dapper.csproj" />
+    <ProjectReference Include="..\DocuStorage.DataContent.S3\DocuStorage.DataContent.S3.csproj" />
+    <ProjectReference Include="..\DocuStorage.DAzure.DStorage\DocuStorage.DAzure.DStorage.csproj" />
+    <ProjectReference Include="..\DocuStorate.Data\DocuStorage.Data.csproj" />
+  </ItemGroup>
+
+</Project>
