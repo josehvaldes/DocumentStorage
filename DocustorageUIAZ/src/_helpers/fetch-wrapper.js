@@ -1,10 +1,14 @@
 import { authAtom } from '../_state';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import { useMsal } from "@azure/msal-react";
 
 export { useFetchWrapper };
 
 function useFetchWrapper() {
     const [auth, setAuth] = useRecoilState(authAtom);
+    const navigate = useNavigate();
+    const { instance } = useMsal();
 
     return {
         get: request('GET'),
@@ -102,7 +106,10 @@ function useFetchWrapper() {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                     localStorage.removeItem('user');
                     setAuth(null);
-                    //history.push('/login');
+                    instance.logoutPopup().catch(e => {
+                        console.error(e);
+                    });
+                    navigate('/');
                 }
                 //[405] Not allowed
                 const error = (data && data.message) || response.statusText;

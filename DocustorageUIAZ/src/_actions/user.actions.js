@@ -29,7 +29,6 @@ function useUserActions() {
 
     function getAllDocuments() {
         return fetchWrapper.get(baseDocumentsUrl).then((response) => {
-            console.log(response);
             setDocuments(response);
         });
     }
