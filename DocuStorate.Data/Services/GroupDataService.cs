@@ -2,16 +2,25 @@
 using DocuStorage.Common;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 
 
 
 public class GroupDataService : IGroupDataService
 {
+    private readonly IConfiguration _configuration;
+
+    public GroupDataService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+
     public void AssignToUser(int userId, int[] groups)
     {
         var query = "select * from assign_groups_to_user(@userId, @groups)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         using var cmd = new NpgsqlCommand(query, con);
@@ -24,7 +33,7 @@ public class GroupDataService : IGroupDataService
     {
         var query = "insert into groups(name) values (@name) RETURNING id";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         using var cmd = new NpgsqlCommand(query, con);
@@ -41,7 +50,7 @@ public class GroupDataService : IGroupDataService
         List<Group> result = new List<Group>();
         var query = "select * from get_groups()";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         using var reader = cmd.ExecuteReader();
@@ -65,7 +74,7 @@ public class GroupDataService : IGroupDataService
         List<Group> result = new List<Group>();
         var query = "select * from get_groups_by_user(@userId)";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("userId", userId);
@@ -87,7 +96,7 @@ public class GroupDataService : IGroupDataService
 
     public void Delete(int id)
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         var query = "delete from groups where id = @id";
         using var cmd = new NpgsqlCommand(query, con);

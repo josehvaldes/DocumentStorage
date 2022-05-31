@@ -2,43 +2,61 @@
 
 namespace DocuStorage.Common
 {
-    public class Configuration
+    public static class ConfigurationExtensions 
     {
-        public static string DatabaseConnection() 
+        public static string DatabaseConnection(this IConfiguration configuration) 
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["ConnectionStrings:postgresql"];
         }
 
-        public static string DatabaseContentConnection()
+        public static string DatabaseContentConnection(this IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["ConnectionStrings:contentdb"];
         }
 
-        public static string AWSBucketName()
+        public static string AWSBucketName(this IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["AWS:BucketName"];
         }
 
-        public static string AWSAccessKey() 
+        public static string AWSAccessKey(this IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["AWS:AccessKey"];
         }
 
-        public static string AWSSecretKey()
+        public static string AWSSecretKey(this IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["AWS:SecretKey"];
         }
 
-        public static string AWSRegion()
+        public static string AWSRegion(this IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             return configuration["AWS:Region"];
         }
+
+        public static string RedisConfig(this IConfiguration configuration)
+        {
+            return configuration["Redis:configuration"];
+        }
+
+        public static string AzureStorageConnection(this IConfiguration configuration)
+        {
+            return configuration["Azure:StorageConnection"];
+        }
+        public static string AzureContainerName(this IConfiguration configuration)
+        {
+            return configuration["Azure:ContainerName"];
+        }
+        public static string AzureTableName(this IConfiguration configuration)
+        {
+            return configuration["Azure:TableName"];
+        }
+
+    }
+
+    public class Configuration
+    {
+
 
         public static string RedisConfig()
         {
@@ -46,15 +64,5 @@ namespace DocuStorage.Common
             return configuration["Redis:configuration"];
         }
 
-        public static string AzureStorageConnection() 
-        {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            return configuration["Azure:StorageConnection"];
-        }
-        public static string AzureContainerName()
-        {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            return configuration["Azure:ContainerName"];
-        }
     }
 }

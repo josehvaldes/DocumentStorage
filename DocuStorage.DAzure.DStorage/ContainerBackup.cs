@@ -3,18 +3,26 @@
 using DocuStorage.Common.Data.Services;
 using Azure.Storage.Blobs;
 using DocuStorage.Common;
+using Microsoft.Extensions.Configuration;
 
 public class ContainerBackup : IBackup
 {
-    private readonly string _containerName = Configuration.AzureContainerName();
-    private readonly string _connectionString = Configuration.AzureStorageConnection();
+    private readonly IConfiguration _configuration;
+    private readonly string _containerName ;
+    private readonly string _connectionString;
 
     private IDocumentDataService _service;
-    
-    public ContainerBackup(IDocumentDataService service) 
+    private IMirror<DocumentEntity> _mirror;
+
+    public ContainerBackup(IDocumentDataService service, IConfiguration configuration, IMirror<DocumentEntity> mirror) 
     {
         _service = service;
-    }
+        _configuration = configuration;
+        _mirror = mirror;
+
+        _containerName = _configuration.AzureContainerName();
+        _connectionString = _configuration.AzureStorageConnection();
+}
 
     public async Task<bool> Backup(int documentId)
     {
@@ -36,6 +44,7 @@ public class ContainerBackup : IBackup
                 using var ms = new MemoryStream(document.Content);
                 await blobClient.UploadAsync(ms);
                 await blobClient.SetMetadataAsync(metadata); // execute sync to ensure it is done
+                await _mirror.AddAsync(Converter.Convert(document));
                 return true;
             }
             else 

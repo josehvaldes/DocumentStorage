@@ -4,18 +4,21 @@ using DocuStorage.Data.Dapper.Services;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
 using NUnit.Framework;
+using Microsoft.Extensions.Configuration;
 
 [TestFixture]
 public class UserDataIntegrationTest
 {
-
+    private IConfiguration _configuration;
     private IUserDataService _userService;
     private int DefaultUserId = 1;
+    
 
     [SetUp]
     public void Setup()
     {
-        _userService = new UserDataDpService(new SqlDapperProvider());
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _userService = new UserDataDpService(new SqlDapperProvider(_configuration));
     }
 
     private User GetDummyUser()
@@ -75,7 +78,7 @@ public class UserDataIntegrationTest
             var user = GetDummyUser();
             user.Id = DefaultUserId;
             user.Username = "root";
-            user.Password = "321";
+            user.Password = "root123";
             var response = _userService.Update(user);
             Assert.IsTrue(response);
         }

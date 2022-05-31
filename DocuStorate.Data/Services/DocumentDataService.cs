@@ -3,6 +3,7 @@
 using DocuStorage.Common;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 
 /// <summary>
@@ -11,15 +12,17 @@ using Npgsql;
 public class DocumentDataService : IDocumentDataService
 {
     private IDocumentContentService _documentContentService;
-    public DocumentDataService(IDocumentContentService documentContentService) 
+    private readonly IConfiguration _configuration;
+    public DocumentDataService(IDocumentContentService documentContentService, IConfiguration configuration) 
     {
         _documentContentService = documentContentService;
+        _configuration = configuration;
     }
 
     public void AssignToGroup(int groupId, int[] documents)
     {
         var query = "select * from assign_documents_to_group(@groupid, @docs)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         using var cmd = new NpgsqlCommand(query, con);
@@ -31,7 +34,7 @@ public class DocumentDataService : IDocumentDataService
     public void AssignToUser(int userId, int[] documents)
     {
         var query = "select * from assign_documents_to_user(@userId, @docs)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         using var cmd = new NpgsqlCommand(query, con);
@@ -45,7 +48,7 @@ public class DocumentDataService : IDocumentDataService
     {
         var query = "insert into documents(name, category, description, created_on) values (@name, @category, @description, @createdOn) RETURNING id";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         using var cmd = new NpgsqlCommand(query, con);
@@ -73,7 +76,7 @@ public class DocumentDataService : IDocumentDataService
     {
         var query = "select * from get_document(@id)";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("id", id);
@@ -105,7 +108,7 @@ public class DocumentDataService : IDocumentDataService
         List<Document> result = new List<Document>();
         var query = "select * from get_documents()";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         using var reader = cmd.ExecuteReader();
@@ -131,7 +134,7 @@ public class DocumentDataService : IDocumentDataService
     {
         var list = new List<Document>();
         var query = "select * from get_documents_by_group_id(@groupId)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("groupId", groupId);
@@ -159,7 +162,7 @@ public class DocumentDataService : IDocumentDataService
         var list = new List<Document>();
         var query = "select * from get_documents_by_user_id(@userId)";
 
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("userId", userId);
@@ -187,7 +190,7 @@ public class DocumentDataService : IDocumentDataService
     {
         var list = new List<DocumentGroup>();
         var query = "select * from get_docs_in_groups_by_user_id(@userId)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("userId", userId);
@@ -213,7 +216,7 @@ public class DocumentDataService : IDocumentDataService
     {
         var list = new List<DocumentGroup>();
         var query = "select * from get_all_docs_by_user_id(@userId)";
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         using var cmd = new NpgsqlCommand(query, con);
         cmd.Parameters.AddWithValue("userId", userId);
@@ -238,7 +241,7 @@ public class DocumentDataService : IDocumentDataService
 
     public void Delete(int id)
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         var query = "delete from documents where id = @id";
         using var cmd = new NpgsqlCommand(query, con);

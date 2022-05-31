@@ -4,18 +4,20 @@ using DocuStorage.Data.Dapper.Services;
 using DocuStorage.Common.Data.Model;
 using NUnit.Framework;
 using System;
-
+using Microsoft.Extensions.Configuration;
 
 [TestFixture]
 public class GroupDataIntegrationTest
 {
     private GroupDataDpService _groupDataService;
     private int DefaultUserId = 1;
+    private IConfiguration _configuration;
 
     [SetUp]
     public void Setup() 
     {
-        _groupDataService = new GroupDataDpService(new SqlDapperProvider());
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _groupDataService = new GroupDataDpService(new SqlDapperProvider(_configuration));
     }
 
     private Group GetDummyGroup()
@@ -65,7 +67,7 @@ public class GroupDataIntegrationTest
         Assert.IsNotEmpty(list);
     }
 
-    [Test]
+    
     public void GetGroupByUser_IsNotEmpty()
     {
         var list = _groupDataService.GetByUser(DefaultUserId);

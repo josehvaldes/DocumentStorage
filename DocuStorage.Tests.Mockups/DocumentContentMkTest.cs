@@ -63,7 +63,7 @@ public class DocumentContentMkTest
 
         try
         {
-            var list = new List<object>() { new { content = new byte[1] } };
+            var list = new List<object>() { new DocumentMoq { content = new byte[1] } };
             
             var dpWrapper = new Mock<ISqlDapperWrapper>();
             dpWrapper.Setup(x => x.Query(It.IsAny<string>(), It.IsAny<object?>())).Returns(list);

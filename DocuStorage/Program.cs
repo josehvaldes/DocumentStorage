@@ -23,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
                 });
 
     services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+    
 
     services.AddScoped<IUserService, UserService>();
     services.AddScoped<IDocumentService, DocumentService>();
@@ -33,9 +34,11 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IDocumentDataService, DocumentDataDpService>();
     services.AddScoped<IDocumentContentService, DocumentContentDpService>();
     services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
+    services.AddScoped<IBackup, ContainerBackup>();
+    services.AddScoped<IMirror<DocumentEntity>, DocumentTableMirror>();
 
     services.AddSingleton<IS3Cache, RedisCache>();
-    services.AddScoped<IBackup, ContainerBackup>();
+    
 }
 
 var app = builder.Build();

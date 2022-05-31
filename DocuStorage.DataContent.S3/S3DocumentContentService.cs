@@ -5,20 +5,28 @@ using DocuStorage.Common.Data.Services;
 using DocuStorage.Common;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.Extensions.Configuration;
 
 public class S3DocumentContentService : IDocumentContentService
 {
+    private readonly IConfiguration _configuration;
     private AmazonS3Client _S3Client;
     private IS3Cache _s3Cache;
+    
+    private readonly string _s3BucketName;
+    private readonly string _awsAccessKey;
+    private readonly string _awsSecretKey;
+    private readonly string _awsRegion;
 
-    private readonly string _s3BucketName = Configuration.AWSBucketName();
-    private readonly string _awsAccessKey = Configuration.AWSAccessKey();
-    private readonly string _awsSecretKey = Configuration.AWSSecretKey();
-    private readonly string _awsRegion = Configuration.AWSRegion();
-
-    public S3DocumentContentService(IS3Cache s3Cache) 
+    public S3DocumentContentService(IS3Cache s3Cache, IConfiguration configuration) 
     {
         _s3Cache = s3Cache;
+        _configuration = configuration;
+
+        _s3BucketName = _configuration.AWSBucketName();
+        _awsAccessKey = _configuration.AWSAccessKey();
+        _awsSecretKey = _configuration.AWSSecretKey();
+        _awsRegion = _configuration.AWSRegion();
 
         AmazonS3Config config = new AmazonS3Config();
         config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(_awsRegion);

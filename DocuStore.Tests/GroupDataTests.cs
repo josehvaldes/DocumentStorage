@@ -4,6 +4,7 @@ using DocuStorage.Data.Services;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
 using NUnit.Framework;
+using Microsoft.Extensions.Configuration;
 
 /// <summary>
 /// Unit for GroupDataService class
@@ -15,11 +16,13 @@ public class GroupDataTests
     private const int DefaultUserId = 1;
 
     private IGroupDataService _groupDataService;
+    private IConfiguration _configuration;
 
     [SetUp]
     public void Setup() 
     {
-        _groupDataService = new GroupDataService();
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _groupDataService = new GroupDataService(_configuration);
     }
 
     private Group GetDummyGroup() 

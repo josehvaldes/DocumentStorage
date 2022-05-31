@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 [TestFixture]
 public class DocumentDataIntegrationTest
@@ -21,11 +22,14 @@ public class DocumentDataIntegrationTest
 
     private IDocumentDataService _documentService;
     private IGroupDataService _groupDataService;
+    private IConfiguration _configuration;
 
     [SetUp]
     public void Setup()
     {
-        var sqlDataProvider = new SqlDapperProvider();
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+        var sqlDataProvider = new SqlDapperProvider(_configuration);
         _documentService = new DocumentDataDpService(sqlDataProvider, new DocumentContentDpService(sqlDataProvider));
         _groupDataService = new GroupDataDpService(sqlDataProvider);
     }

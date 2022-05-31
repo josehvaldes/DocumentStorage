@@ -3,6 +3,7 @@ using NUnit.Framework;
 using DocuStorage.Data.Services;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
+using Microsoft.Extensions.Configuration;
 
 /// <summary>
 /// Unit for UserDataService class
@@ -13,10 +14,13 @@ public class UserDataTests
  
     private IUserDataService _userService;
     private User _dummyUser;
+    private IConfiguration _configuration;
+
     [SetUp]
     public void Setup() 
     {
-        _userService = new UserDataService();
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _userService = new UserDataService(_configuration);
         _dummyUser = _userService.Create(GetDummyUser());
 
     }

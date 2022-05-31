@@ -4,6 +4,7 @@ using DocuStorage.Common.Data.Model;
 using DocuStorage.Data.Dapper.Services;
 using NUnit.Framework;
 using DocuStorage.Common.Data.Services;
+using Microsoft.Extensions.Configuration;
 
 [TestFixture]
 public class DocumentContentIntegrationTest
@@ -12,11 +13,14 @@ public class DocumentContentIntegrationTest
     private const string Default_TestOutput = @"c:\personal\temp\favicon.ico";
     private int DefaultDocumentId = 1;
     private IDocumentContentService _service;
+    private IConfiguration _configuration;
+    
 
     [SetUp]
     public void Setup() 
     {
-        _service = new DocumentContentDpService(new SqlDapperProvider());
+        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _service = new DocumentContentDpService(new SqlDapperProvider(_configuration));
     }
 
     [Test]
@@ -25,14 +29,13 @@ public class DocumentContentIntegrationTest
         var bytes = File.ReadAllBytes(Default_Filepath);
         var document = new Document()
         {
-            Id = 1,
+            Id = 2,
             Content = bytes
         };
 
         try
         {
             _service.SaveDocContent(document);
-            Assert.Greater(document.Id, 0);
             _service.DeleteContent(document.Id);
         }
         catch (Exception e)

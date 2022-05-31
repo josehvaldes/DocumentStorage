@@ -4,13 +4,20 @@ using Npgsql;
 using DocuStorage.Common;
 using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
-
+using Microsoft.Extensions.Configuration;
 
 public class UserDataService : IUserDataService
 {
+    private readonly IConfiguration _configuration;
+
+    public UserDataService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public User Create(User user) 
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         var query = "insert into users(username, password, role) values (@username, @passwd, @role) RETURNING id";
@@ -28,7 +35,7 @@ public class UserDataService : IUserDataService
 
     public void Delete(int userId)
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
         var query = "delete from users where id = @userid";
         using var cmd = new NpgsqlCommand(query, con);
@@ -38,7 +45,7 @@ public class UserDataService : IUserDataService
 
     public User? Get(int id) 
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         var query = "select * from get_user(@user_id)";
@@ -64,7 +71,7 @@ public class UserDataService : IUserDataService
 
     public User? Get(User userparams)
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         var query = "select * from get_user(@username, @passwd)";
@@ -93,7 +100,7 @@ public class UserDataService : IUserDataService
     {
         List<User> users = new List<User>();
 
-        var cs = Configuration.DatabaseConnection();
+        var cs = _configuration.DatabaseConnection();
 
         using (var con = new NpgsqlConnection(cs)) 
         {
@@ -121,7 +128,7 @@ public class UserDataService : IUserDataService
 
     public bool Update(User user)
     {
-        using var con = new NpgsqlConnection(Configuration.DatabaseConnection());
+        using var con = new NpgsqlConnection(_configuration.DatabaseConnection());
         con.Open();
 
         var query = "update users set username = @username, password = @passwd, role= @role where id=@userid";
