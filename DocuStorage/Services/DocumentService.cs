@@ -80,9 +80,9 @@ public class DocumentService : IDocumentService
         _documentService.Delete(id);
     }
 
-    public bool Backup(int id)
+    public async Task<bool> Backup(int id)
     {
-        return _backup.Backup(id);
+        return await _backup.Backup(id);
     }
 }
 

@@ -19,6 +19,6 @@ namespace DocuStorage.Services
         void AssignToGroup(int groupId, int[] documents);
         void Delete(int id);
 
-        bool Backup(int id);
+        Task<bool> Backup(int id);
     }
 }

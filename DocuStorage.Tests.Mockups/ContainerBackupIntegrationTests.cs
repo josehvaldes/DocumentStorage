@@ -29,10 +29,34 @@ public class ContainerBackupIntegrationTests
 
         try 
         {
-            bool response = backup.Backup(document.Id);    
-            Assert.IsTrue(response);
+            bool response = backup.Backup(document.Id).Result;    
         }
         catch(Exception ex) 
+        {
+            Assert.Fail(ex.Message);
+        }
+    }
+
+    [Test]
+    public void BackDelete_NoExceptions() 
+    {
+        var document = new Document()
+        {
+            Id = 1,
+            Name = Default_Name,
+            Content = File.ReadAllBytes(Default_Filepath)
+        };
+
+        var service = new Mock<IDocumentDataService>();
+        service.Setup(x => x.Get(It.IsAny<int>())).Returns(document);
+
+        var backup = new ContainerBackup(service.Object);
+
+        try
+        {
+            bool response = backup.Delete(document.Id).Result;
+        }
+        catch (Exception ex)
         {
             Assert.Fail(ex.Message);
         }

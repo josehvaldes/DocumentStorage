@@ -69,12 +69,22 @@ public class S3ContentIntegrationTests
             var document = new Document()
             {
                 Id = 1,
+                Name = Default_Name,
+                Content = File.ReadAllBytes(Default_Filepath),
             };
 
             var s3Service = new S3DocumentContentService(_cache);
-            s3Service.GetDocContent(document);
+
+            s3Service.SaveDocContent(document).Wait();
+
+            document.Content = null; // empty the content
             
+            s3Service.GetDocContent(document);
+
+            Assert.IsNotNull(document.Content);
+
             File.WriteAllBytes(Default_TestOutput, document.Content);
+            
             Assert.IsTrue(File.Exists(Default_TestOutput));
         } 
         catch (Exception ex) 

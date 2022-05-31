@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 public interface IBackup
 {
-    bool Backup(int documentId);    
+    Task<bool> Backup(int documentId);
 
+    Task<bool> Delete(int documentId);
 }
 

@@ -117,16 +117,20 @@ public class DocumentsController : ControllerBase
     }
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpPost("{id}/backup")]
-    public IActionResult Backup(int id) 
+    [HttpPut("{id}/backup")]
+    public async Task<IActionResult> Backup(int id) 
     {
         try 
         {
-            if (_documentService.Backup(id)) 
+            var result = await _documentService.Backup(id);
+            
+            if (result) 
             {
                 return Ok();
             }
+            
             return Ok("Document already exists as backup");
+
         } catch (Exception ex) 
         {
             return BadRequest(ex.Message);
