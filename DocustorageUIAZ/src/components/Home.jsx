@@ -16,7 +16,7 @@ function Home() {
     }, []);
 
     return (
-        <div className="">
+        <div >
             <h5 className="card-title">
                 <center>
                     You are awesome, {name}

@@ -21,6 +21,9 @@ function LeftNav() {
             <div className="nav-leftitem">
                 <Link to="/documents">Show Documents</Link>
             </div>
+            <div className="nav-leftitem">
+                <Link to="/backupdocuments">Show Backup Documents</Link>
+            </div>
         </div>
     );
 }

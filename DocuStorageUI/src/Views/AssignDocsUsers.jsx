@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { useRecoilValue} from 'recoil';
 import { useForm } from "react-hook-form";
@@ -11,6 +11,9 @@ function AssignDocsUsers()
 {
     const users = useRecoilValue(usersAtom);
     var documents = useRecoilValue(documentsAtom);
+
+    const [selectedUser, setSelectedUser] = useState(false);
+
     const userActions = useUserActions();
 
     useEffect(() => {
@@ -24,8 +27,7 @@ function AssignDocsUsers()
 
     function onSubmit()
     {
-        var e = document.getElementById("user");
-        var userId = e.options[e.selectedIndex].value;
+        var userId = selectedUser;
         var list = []
         document.querySelectorAll('input[name=docscheck]:checked').forEach(e => list.push(e.value));
         userActions.setUserDocuments({
@@ -37,6 +39,8 @@ function AssignDocsUsers()
     function onChangeUser(event)
     {
         var id = event.target.value;
+        setSelectedUser(id)
+
         if (id > 0) {
             userActions.getDocumentsByUser(id).then(result => {
                 documents.forEach(doc => {
@@ -75,7 +79,7 @@ function AssignDocsUsers()
                     }
                     {!users && <div className="spinner-border spinner-border-sm"></div>}
                 </div>
-
+                
                 <h3>Documents</h3>
 
                 <div className="form-group ">

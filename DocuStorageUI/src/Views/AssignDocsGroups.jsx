@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ function AssignDocsGroups()
     const documents = useRecoilValue(documentsAtom);
     const groups = useRecoilValue(groupsAtom);
     const userActions = useUserActions();
+    const [selectedGroup, setSelectedGroup] = useState(false);
 
     useEffect(() => {
         userActions.getAllGroups();
@@ -24,8 +25,7 @@ function AssignDocsGroups()
 
     function onSubmit()
     {
-        var e = document.getElementById("group");
-        var groupId = e.options[e.selectedIndex].value;
+        var groupId = selectedGroup;
         var list = []
         document.querySelectorAll('input[name=docscheck]:checked').forEach(e => list.push(e.value));
         userActions.setGroupDocuments({
@@ -37,6 +37,8 @@ function AssignDocsGroups()
     function onChangeGroup(event)
     {
         var id = event.target.value;
+        setSelectedGroup(id)
+
         if (id > 0) {
             userActions.getDocumentsByGroup(id).then(result => {
                 documents.forEach(doc => {

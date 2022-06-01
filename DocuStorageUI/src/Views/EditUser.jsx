@@ -53,7 +53,7 @@ function EditUser() {
 
     return (
         <div className="containerBody col-md-6 offset-md-3">
-            <h1>Create USER</h1>
+            <h2>Create User</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label>Username </label><label className="required">*</label>

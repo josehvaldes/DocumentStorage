@@ -4,6 +4,7 @@ using DocuStorage.DAzure.DStorage;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
+using System.Linq.Expressions;
 
 namespace DocuStorage.Tests.Mockups;
 
@@ -147,6 +148,27 @@ public class ContainerBackupIntegrationTests
         {
             Assert.Fail(e.Message);
         }
+    }
+
+    [Test]
+    public void QueryMirror_AtLeastOne() 
+    {
+        //Ensure you have one document in your table
+        var mirror = new DocumentTableMirror(_configuration);
+        Expression<Func<DocumentEntity, bool>> filter = x => x.PartitionKey == "text";
+        var list = mirror.QueryAsync(filter).Result;
+        Assert.GreaterOrEqual(list.Count(),1);
+    }
+
+    [Test]
+    public void QueryStringMirror_AtLeastOne()
+    {
+        //Ensure you have one document in your table
+        var mirror = new DocumentTableMirror(_configuration);
+        //var query = "PartitionKey eq 'jpg' and RowKey eq '3'";
+        var query = "PartitionKey eq 'text'";
+        var list = mirror.QueryAsync(query).Result;
+        Assert.GreaterOrEqual(list.Count(), 1);
     }
 
 }

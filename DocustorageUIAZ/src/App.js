@@ -2,7 +2,7 @@ import './App.css';
 
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { ProtectedComponent } from "./components/ProtectedComponent";
-import { PageLayout, ContentBody } from './Layout';
+import { PageLayout, ContentBody } from './layout';
 
 
 function App() {

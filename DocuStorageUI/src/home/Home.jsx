@@ -17,7 +17,10 @@ function Home() {
 
     return (
         <div className="containerBody col-md-6 offset-md-3">
-            <h2>Welcome {auth?.username}</h2>
+            <center>
+                <h2>Welcome {auth?.username}</h2>
+            </center>
+            
         </div>
     );
 }

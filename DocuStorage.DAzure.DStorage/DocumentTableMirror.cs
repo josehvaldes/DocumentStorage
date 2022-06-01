@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,5 +49,25 @@ public class DocumentTableMirror : IMirror<DocumentEntity>
     {
         var tableClient = await GetTableClient();
         return await tableClient.GetEntityAsync<DocumentEntity>(partitionKey, rowKey);
+    }
+
+    public async Task<IEnumerable<DocumentEntity>> QueryAsync(Expression<Func<DocumentEntity, bool>> predicate)
+    {
+        var tableClient = await GetTableClient();
+        var result = tableClient.Query(predicate, 10);
+        var list = result.ToList();
+        return list;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="query">PartitionKey eq '{value}'</param>
+    /// <returns></returns>
+    public async Task<IEnumerable<DocumentEntity>> QueryAsync(string query)
+    {
+        var tableClient = await GetTableClient();
+        var result = tableClient.Query<DocumentEntity>(query);
+        return result;
     }
 }

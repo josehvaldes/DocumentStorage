@@ -36,6 +36,7 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<ISqlDataProvider, SqlDapperProvider>();
     services.AddScoped<IBackup, ContainerBackup>();
     services.AddScoped<IMirror<DocumentEntity>, DocumentTableMirror>();
+    services.AddScoped<IBackupDocumentsService, BackupDocumentsService>();
 
     services.AddSingleton<IS3Cache, RedisCache>();
     
