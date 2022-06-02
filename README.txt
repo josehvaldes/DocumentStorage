@@ -77,11 +77,15 @@ AWS S3 SUPPORT
 
 To use the S3 Support module, replace the IDocumentContentService implementation in the Services Scope and use the new S3DocumentContentService. Update the appsettings.json with your AWS AccessKey and SecretKey
 
+KUBERNETES SUPPORT
+
+To deploy the services in a kubernetes environment use the yaml manifest in k8s folder and configure the deployments as you wish.
+
 
 Azure SUPPORT
 Update your storage connetion string in the appsettings.json. Edit the ContainerName if necessary. 
 
+Azure Active Directory Support.
+- DocuStorageAD, is a basic web api that receives requests and authenticate then using microsoft Active directory. Configure the 'Azure' entries in the appsettings.json with your Azure credentials to run it.
 
-KUBERNETES SUPPORT
-
-To deploy the services in a kubernetes environment use the yaml manifest in k8s folder and configure the deployments as you wish.
+- DocustorageUIAZ, is the react app that uses Azure token authentication and interacts with the DocuStorageAD app only. Update the authConfig.js file with your Azure configuration.
