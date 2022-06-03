@@ -13,7 +13,10 @@ function AssignDocsGroups()
     const documents = useRecoilValue(documentsAtom);
     const groups = useRecoilValue(groupsAtom);
     const userActions = useUserActions();
-    const [selectedGroup, setSelectedGroup] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState({
+        groupId: "-1",
+        docs: []
+    });
 
     useEffect(() => {
         userActions.getAllGroups();
@@ -25,9 +28,9 @@ function AssignDocsGroups()
 
     function onSubmit()
     {
-        var groupId = selectedGroup;
-        var list = []
-        document.querySelectorAll('input[name=docscheck]:checked').forEach(e => list.push(e.value));
+        var groupId = selectedGroup.groupId;
+        var list = selectedGroup.docs;
+        
         userActions.setGroupDocuments({
             groupId: groupId,
             documents: list
@@ -37,32 +40,47 @@ function AssignDocsGroups()
     function onChangeGroup(event)
     {
         var id = event.target.value;
-        setSelectedGroup(id)
+        setSelectedGroup({
+            groupId: id,
+            docs: []
+        });
 
         if (id > 0) {
             userActions.getDocumentsByGroup(id).then(result => {
-                documents.forEach(doc => {
-                    var element = document.getElementById("c_" + doc.id);
-                    element.checked = false;
-                    result.forEach(item => {
-                        if (doc.id == item.id) {
-                            element.checked = true;
-                        }
-                    });
+
+                var list = [];
+                result.forEach(item => {
+                    list.push(item.id);
                 });
-            });
-        }
-        else {
-            documents.forEach(doc => {
-                document.getElementById("c_" + doc.id).checked = false;
+
+                setSelectedGroup({
+                    groupId: id,
+                    docs: list
+                });
             });
         }
     }
 
+    function changeCheckbox(event)
+    {
+        var id = parseInt(event.target.value);
+        var selectedCheckboxes = selectedGroup.docs;
+        const findIdx = selectedCheckboxes.indexOf(id);
+        if (findIdx > -1) {
+            selectedCheckboxes.splice(findIdx, 1);
+        } else {
+            selectedCheckboxes.push(id);
+        }
+
+        setSelectedGroup({
+            groupId: selectedGroup.groupId,
+            docs: selectedCheckboxes
+        });
+    }
 
     return (
         <div className="containerBody col-md-6 offset-md-3">
-            <h2>Assign Documents to Groups</h2>
+            <h3>Assign Documents to Groups</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label>Select a Group </label>
@@ -86,7 +104,8 @@ function AssignDocsGroups()
                         <div className="checkboxGroup">
                             {documents.map(doc =>
                                 <div key={doc.id}>
-                                    <input type="checkbox" id={"c_" + doc.id} name="docscheck" defaultValue={doc.id} />
+                                    <input type="checkbox" value={doc.id}
+                                        checked={selectedGroup.docs.includes(doc.id)} onChange={changeCheckbox} />
                                     <label className="checkboxLabel" key={doc.id}>{doc.name}</label>
                                 </div>
                             )}

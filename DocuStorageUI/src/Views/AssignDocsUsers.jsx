@@ -12,7 +12,10 @@ function AssignDocsUsers()
     const users = useRecoilValue(usersAtom);
     var documents = useRecoilValue(documentsAtom);
 
-    const [selectedUser, setSelectedUser] = useState(false);
+    const [selectedUser, setSelectedUser] = useState({
+        userId: "-1",
+        docs: []
+    });
 
     const userActions = useUserActions();
 
@@ -27,39 +30,50 @@ function AssignDocsUsers()
 
     function onSubmit()
     {
-        var userId = selectedUser;
-        var list = []
-        document.querySelectorAll('input[name=docscheck]:checked').forEach(e => list.push(e.value));
         userActions.setUserDocuments({
-            userId: userId,
-            documents: list
+            userId: selectedUser.userId,
+            documents: selectedUser.docs
         });
     }
 
     function onChangeUser(event)
     {
         var id = event.target.value;
-        setSelectedUser(id)
+        setSelectedUser({
+            userId: id,
+            docs: []
+        });
 
         if (id > 0) {
             userActions.getDocumentsByUser(id).then(result => {
-                documents.forEach(doc => {
-                    var element = document.getElementById("c_" + doc.id);
-                    element.checked = false;
-                    result.forEach(item => {
-                        if (doc.id == item.id) {
-                            element.checked = true;
-                        }
-                    });
+
+                var list = [];
+                result.forEach(item => {
+                    list.push(item.id);
+                });
+
+                setSelectedUser({
+                    userId: id,
+                    docs: list
                 });
             });
         }
-        else
-        {
-            documents.forEach(doc => {
-                document.getElementById("c_" + doc.id).checked = false;
-            });
+    }
+
+    function changeCheckbox(event) {
+        var id = parseInt(event.target.value);
+        var selectedCheckboxes = selectedUser.docs;
+        const findIdx = selectedCheckboxes.indexOf(id);
+        if (findIdx > -1) {
+            selectedCheckboxes.splice(findIdx, 1);
+        } else {
+            selectedCheckboxes.push(id);
         }
+
+        setSelectedUser({
+            userId: selectedUser.userId,
+            docs: selectedCheckboxes
+        });
     }
 
     return (
@@ -88,7 +102,9 @@ function AssignDocsUsers()
                         <div className="checkboxGroup">
                             {documents.map(doc =>
                                 <div key={doc.id}>
-                                    <input type="checkbox" id={"c_" + doc.id} name="docscheck" defaultValue={doc.id} />
+                                    <input type="checkbox" value={doc.id}
+                                        checked={selectedUser.docs.includes(doc.id)} onChange={changeCheckbox}
+                                    />
                                     <label className="checkboxLabel" key={doc.id}>{doc.name}</label>
                                 </div>
                             )}

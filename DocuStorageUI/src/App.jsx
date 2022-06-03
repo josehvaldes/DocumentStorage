@@ -1,4 +1,4 @@
-import { Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Nav, LeftNav, PrivateRoute } from '_components';
 import { history } from '_helpers';
