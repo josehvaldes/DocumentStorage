@@ -17,7 +17,8 @@ public class UserDataIntegrationTest
     [SetUp]
     public void Setup()
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<UserDataIntegrationTest>();
+        _configuration = builder.Build();
         _userService = new UserDataDpService(new SqlDapperProvider(_configuration));
     }
 

@@ -19,7 +19,8 @@ public class DocumentContentIntegrationTest
     [SetUp]
     public void Setup() 
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<DocumentContentIntegrationTest>();
+        _configuration = builder.Build();
         _service = new DocumentContentDpService(new SqlDapperProvider(_configuration));
     }
 

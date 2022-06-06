@@ -21,7 +21,8 @@ public class GroupDataTests
     [SetUp]
     public void Setup() 
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<GroupDataTests>();
+        _configuration = builder.Build();
         _groupDataService = new GroupDataService(_configuration);
     }
 

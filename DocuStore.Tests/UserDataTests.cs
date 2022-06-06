@@ -19,7 +19,9 @@ public class UserDataTests
     [SetUp]
     public void Setup() 
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<UserDataTests>();
+        _configuration = builder.Build();
+
         _userService = new UserDataService(_configuration);
         _dummyUser = _userService.Create(GetDummyUser());
 

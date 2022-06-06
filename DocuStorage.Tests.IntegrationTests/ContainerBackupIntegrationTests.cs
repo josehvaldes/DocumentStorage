@@ -1,4 +1,5 @@
-﻿using DocuStorage.Common.Data.Model;
+﻿using DocuStorage.Common;
+using DocuStorage.Common.Data.Model;
 using DocuStorage.Common.Data.Services;
 using DocuStorage.DAzure.DStorage;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +19,8 @@ public class ContainerBackupIntegrationTests
     [SetUp]
     public void Setup()
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<ContainerBackupIntegrationTests>();
+        _configuration = builder.Build();
     }
 
     [Test]

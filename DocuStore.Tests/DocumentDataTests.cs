@@ -26,7 +26,8 @@ public class DocumentDataTests
     [SetUp]
     public void Setup()
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<DocumentDataTests>();
+        _configuration = builder.Build();
 
         _documentService = new DocumentDataService(new DocumentContentService(_configuration), _configuration);
         _groupDataService = new GroupDataService(_configuration);

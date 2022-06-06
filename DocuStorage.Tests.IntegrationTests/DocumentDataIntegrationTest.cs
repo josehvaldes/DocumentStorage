@@ -27,7 +27,8 @@ public class DocumentDataIntegrationTest
     [SetUp]
     public void Setup()
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<DocumentDataIntegrationTest>();
+        _configuration = builder.Build();
 
         var sqlDataProvider = new SqlDapperProvider(_configuration);
         _documentService = new DocumentDataDpService(sqlDataProvider, new DocumentContentDpService(sqlDataProvider));
@@ -124,7 +125,7 @@ public class DocumentDataIntegrationTest
         Assert.IsNotEmpty(list);
     }
 
-    [Test]
+    //[Test]
     public void All_Get_Available_NotEmpty()
     {
         int[] documents = new int[] { DefaultDocumentId };

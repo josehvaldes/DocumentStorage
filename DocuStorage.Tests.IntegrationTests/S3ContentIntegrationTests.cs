@@ -18,7 +18,8 @@ public class S3ContentIntegrationTests
     [SetUp]
     public void Setup() 
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<S3ContentIntegrationTests>();
+        _configuration = builder.Build();
         _cache = new RedisCache();
     }
 
@@ -40,9 +41,9 @@ public class S3ContentIntegrationTests
             var task = s3Service.SaveDocContent(document);
             task.Wait();
         }
-        catch(Exception) 
+        catch(Exception ex) 
         {
-            Assert.Fail();
+            Assert.Fail(ex.Message);
         }
     }
 
@@ -58,9 +59,9 @@ public class S3ContentIntegrationTests
             var task = s3Service.DeleteContent(int.Parse(documentId) );
             task.Wait();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Assert.Fail();
+            Assert.Fail(ex.Message);
         }
     }
 

@@ -16,7 +16,9 @@ public class GroupDataIntegrationTest
     [SetUp]
     public void Setup() 
     {
-        _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var builder = new ConfigurationBuilder().AddUserSecrets<GroupDataIntegrationTest>();
+        _configuration = builder.Build();
+
         _groupDataService = new GroupDataDpService(new SqlDapperProvider(_configuration));
     }
 
